@@ -1,0 +1,33 @@
+reglas para  le creacion de archivos  en backend
+
+    1.- Se tomara de muestra el proyecto realizado en el modulo de backend
+        - se crearon las mismas carpetas
+        -las funciones se llamaran del mismo modo get, getById, find,create, update
+        -solo crear las que se ocuparan
+        -comentarios descriptivos y simples
+        -se ocupara "camelCase" para la escritura de variables.
+        -variables cortas y descriptivas
+
+    2.-El formato del archivo sera con la aplicacion Prettier
+
+    3.-Se deberá crear una base de datos en mongoo para pruebas
+        -nombre base de datos: tatooCalendar
+        -nombre admin: adminCalendarTattoo
+
+    4.-En git se trabajará  con la metodologia git-flow
+        --Verificar que se encuentren en la rama develop
+        --Crear la una rama llamada feature ejemplo "feature_login"
+        --realizar commits por cada funcionalidad acabada siendo lo mas descriptivo posible
+        --maximo 50 caracteres para commit
+        --de preferencia utilizar verbos add, change, fix, remove para el commit
+        --no usar punto final ni puntos suspensivos
+        --utilizar prefijos:
+            • feat: para una nueva característica para el usuario.
+            • fix: para un bug que afecta al usuario.
+            • style: para cambios de formato, tabulaciones, espacios o puntos y coma, etc; no afectan al usuario.
+            • test: para tests o refactorización de uno ya existente.
+
+        ejemplo: feat add filter clientes
+
+    5.-Los errores que se generen al realizar push o merge seran corregidos por el mismo miembro que los genere "podrá pedir apoyo para revision"
+    6.-Al momento de realizar el push este deberá ser autorizado por otras 2 personas más del equipo

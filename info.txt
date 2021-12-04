@@ -16,7 +16,7 @@ reglas para  le creacion de archivos  en backend
 
     4.-En git se trabajará  con la metodologia git-flow
         --Verificar que se encuentren en la rama develop
-        --Crear la una rama llamada feature ejemplo "feature_login"
+        --Crear la una rama llamada feature ejemplo "01-bc-feature_login"
         --realizar commits por cada funcionalidad acabada siendo lo mas descriptivo posible
         --maximo 50 caracteres para commit
         --de preferencia utilizar verbos add, change, fix, remove para el commit
@@ -30,4 +30,9 @@ reglas para  le creacion de archivos  en backend
         ejemplo: feat add filter clientes
 
     5.-Los errores que se generen al realizar push o merge seran corregidos por el mismo miembro que los genere "podrá pedir apoyo para revision"
-    6.-Al momento de realizar el push este deberá ser autorizado por otras 2 personas más del equipo
+    6.-Al momento de realizar el push este deberá ser autorizado por otras 2 personas más del equipo.
+
+    registro -Omar
+    staf -Clau
+    clientes- Pau
+    agendar cita login =Toño

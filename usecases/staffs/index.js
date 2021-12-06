@@ -21,5 +21,10 @@ const get = async () => {
   return allUser;
 };
 
-module.exports = { create, get };
+const getById = async (userId) => {
+  const user = await User.findById(userId).exec();
+  return user;
+};
+
+module.exports = { create, get, getById };
 

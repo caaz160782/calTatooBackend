@@ -3,13 +3,11 @@ const router = express.Router();
 const user = require("../usecases/staffs");
 
 
-//crea a todos
 router.post(
   "/",
   async (request, response, next) => {
-   // console.log(user.create);
+
     try {
-     // const userData = request.body;
       const userCreated = await user.create(request.body);
       response.status(201).json({
         status: "ok",
@@ -36,6 +34,23 @@ router.get("/", async (request, response, next) => {
     });
   } catch (error) {
     next(error);
+  }
+});
+
+router.get("/:idUser", async (request, response, next) => {
+  const { idUser } = request.params;
+  try {
+    const userFound = await user.getById(idUser);
+    response.json({
+      ok: true,
+      message: "Done",
+      listUser: { userFound },
+    });
+  } catch (error) {
+    response.status(404).json({
+      ok: false,
+      message: "User not found",
+    });
   }
 });
 

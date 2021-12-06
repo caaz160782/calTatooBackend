@@ -25,6 +25,10 @@ const getById = async (userId) => {
   const user = await User.findById(userId).exec();
   return user;
 };
+const remove = async (userId) => {
+   await User.findByIdAndDelete(userId).exec();
+  //return user;
+};
 
-module.exports = { create, get, getById };
+module.exports = { create, get, getById, remove };
 

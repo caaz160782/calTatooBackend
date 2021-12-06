@@ -54,5 +54,17 @@ router.get("/:idUser", async (request, response, next) => {
   }
 });
 
+router.delete("/:idUser", (request, response, next) => {
+  try {
+    const { idUser } = request.params;
+    const userId = user.remove(idUser);
+    response.status(202).json({
+      ok: true,
+      message: `Deleted  ${idUser} successfully`,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

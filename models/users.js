@@ -6,7 +6,7 @@ const schema = new Schema({
   idRole: {
     type: Schema.ObjectId,
     ref: "Rol",
-    required: true,
+   // required: true,
   },
   name: {
     type: String,

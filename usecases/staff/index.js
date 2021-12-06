@@ -1,10 +1,11 @@
-const Staff = require("../../models/users").model;
+//const Staff = require("../../models/users").model;
+const User = require("../../models/users").model;
 const hash = require("../../lib/crypt");
 const jwt = require("../../lib/jwt");
 
 
 //crear user
-const create = async (userData) => {
+const create = (userData) => {
   const {
     idRole,
     name,
@@ -17,9 +18,10 @@ const create = async (userData) => {
     userName,
     pasword,
   } = userData;
+
   const passwordHash = await hash.hashPassword(pasword);
   //const  user = new User({fullName,role,userName,password:passwordHash});
-  const user = new User({
+  const staff = new User({
     idRole,
     name,
     lastName,
@@ -31,8 +33,8 @@ const create = async (userData) => {
     userName,
     password: passwordHash,
   });
-  const savedUser = await user.save();
-  return savedUser;
+  const savedStaff = await staff.save();
+  return savedStaff;
 };
 
 module.exports = {  create };

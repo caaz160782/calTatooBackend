@@ -67,4 +67,27 @@ router.delete("/:idUser", (request, response, next) => {
   }
 });
 
+router.patch("/:idUser", async (request, response, next) => {
+  const { idUser } = request.params;
+  console.log(idUser);
+ // const userId = request.id;
+  const userData = request.body;
+
+    try {
+      const userUpdate = await user.update(idUser, userData);
+      response.status(201).json({
+        ok: true,
+        message: `Actualizado`,
+        userUpdate,
+      });
+    } catch (error) {
+      next(error);
+      response.status(404).json({
+        status: false,
+        message: "User not found",
+      });
+    }
+
+});
+
 module.exports = router;

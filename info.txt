@@ -35,4 +35,4 @@ reglas para  le creacion de archivos  en backend
     registro -Omar
     staf -Clau
     clientes- Pau
-    agendar cita login =Toño
+    agendar cita login =Toño final

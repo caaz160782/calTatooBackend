@@ -5,12 +5,11 @@ const get =async() =>{
   return allDates;
 }
 
-//ver los detalles de usurio id
+//ver los detalles cita id
 const getById = async (dateId)=>{
   const date= await InfoTattoo.findById(userId).exec();
   return date;
 }
-
 
 const create = async (tattooInfo) => {
   const {

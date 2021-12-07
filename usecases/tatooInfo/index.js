@@ -1,5 +1,10 @@
 const InfoTattoo = require("../../models/tatooInfo").model;
 
+const get =async() =>{    
+  const allDates= await InfoTattoo.find({}).exec();
+  return allDates;
+}
+
 const create = async (tattooInfo) => {
   const {
     idDate,
@@ -13,7 +18,6 @@ const create = async (tattooInfo) => {
     cost,
     estimated,
   } = tattooInfo;
-
   const inftattoo = new InfoTattoo({
     idDate,
     idUser,
@@ -26,8 +30,10 @@ const create = async (tattooInfo) => {
     cost,
     estimated,
   });
-
   const createdDated = await inftattoo.save();
   return createdDated;
 };
-module.exports = { create };
+
+
+
+module.exports = { get,create };

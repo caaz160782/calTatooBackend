@@ -3,13 +3,13 @@ const router = express.Router();
 const infoTatoo = require("../usecases/tatooInfo");
 
 //estos se mostrarian solo al administrador
-router.get("/",async (request, response ,next)=>{
-  try{    
+router.get("/",async (req, res ,next)=>{
+  try{
    const dates= await infoTatoo.get();
-   response.json({
+   res.json({
        ok:true,
        message:"Done",
-       listUser:{
+       listDate:{
         dates
        }
    })
@@ -19,22 +19,21 @@ router.get("/",async (request, response ,next)=>{
 }
 })
 
-
-router.get("/:idDate",isMember,async (request, response, next)=>{
-  const {idDate} = request.params   
-  try{    
-      const userId = await user.getById(idDate)
-      response.json({
+router.get("/:idDate",async (req, res, next)=>{
+  const {idDate} = req.params
+  try{
+      const dateId = await infoTatoo.getById(idDate)
+      res.json({
               ok:true,
               message:"Done",
-              listUser:{ idDate },
+              listDate:{ dateId },
           })
    }
   catch (error){
   //next(error)
-  response.status(404).json({
+  res.status(404).json({
       ok:false,
-      message:"User not found"
+      message:"Date not found"
  })
 }
 })

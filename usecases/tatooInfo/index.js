@@ -6,7 +6,7 @@ const get =async() =>{
 }
 
 //ver los detalles cita id
-const getById = async (dateId)=>{
+const getById = async (dateId) => {
   const date= await InfoTattoo.findById(dateId).exec();
   return date;
 }
@@ -42,4 +42,4 @@ const create = async (tattooInfo) => {
 
 
 
-module.exports = { get,create };
+module.exports = { get,getById,create };

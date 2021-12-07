@@ -7,7 +7,7 @@ const get =async() =>{
 
 //ver los detalles cita id
 const getById = async (dateId)=>{
-  const date= await InfoTattoo.findById(userId).exec();
+  const date= await InfoTattoo.findById(dateId).exec();
   return date;
 }
 

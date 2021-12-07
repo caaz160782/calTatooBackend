@@ -1,15 +1,15 @@
 const InfoTattoo = require("../../models/tatooInfo").model;
 
-const get =async() =>{
-  const allDates= await InfoTattoo.find({}).exec();
+const get = async () => {
+  const allDates = await InfoTattoo.find({}).exec();
   return allDates;
-}
+};
 
 //ver los detalles cita id
-const getById = async (dateId)=>{
-  const date= await InfoTattoo.findById(dateId).exec();
+const getById = async (dateId) => {
+  const date = await InfoTattoo.findById(dateId).exec();
   return date;
-}
+};
 
 const create = async (tattooInfo) => {
   const {
@@ -40,6 +40,19 @@ const create = async (tattooInfo) => {
   return createdDated;
 };
 
+const update = async (dateId, dateData) => {
+  const {
+    description,
+    desPhoto,
+    idSize,
+    tattooColor,
+    tattooBN,
+    cost,
+    estimated,
+  } = dateData;
+  return InfoTattoo.findByIdAndUpdate( dateId, { description,desPhoto, idSize, tattooColor, tattooBN, cost, estimated },
+    { new: true }
+  ).exec();
+};
 
-
-module.exports = { get,create };
+module.exports = { get, create, getById ,create,update};

@@ -20,7 +20,7 @@ router.get("/",async (request, response ,next)=>{
 })
 
 
-router.get("/:idDate",isMember,async (request, response, next)=>{
+router.get("/:idDate",async (request, response, next)=>{
   const {idDate} = request.params   
   try{    
       const userId = await user.getById(idDate)
@@ -39,7 +39,6 @@ router.get("/:idDate",isMember,async (request, response, next)=>{
 }
 })
 
-
 router.post("/", async (req, res, next) => {
   try {
     const infoTatooData = req.body;
@@ -55,5 +54,40 @@ router.post("/", async (req, res, next) => {
     console.log(error);
   }
 });
+
+
+//modificar usuario
+router.patch('/:dateId',async (req,res,next) =>{
+  const {dateId}   =req.params;
+  //const   userId   =request.id;
+  const dateData   =req.body 
+  // if(idUser === userId)
+  // {
+      try{
+         const dateUpdate=  await infoTatoo.update(dateId,dateData); 
+          res.status(201).json({
+                            ok: true,
+                            message: `Actualizado`,
+                            dateUpdate
+             })       
+      }
+      catch (error){
+      next(error)
+      res.status(404).json({
+              status:false,
+              message:"User not found"
+          })
+      }
+//   }
+// else{
+//   response.status(404).json({
+//       ok:false,
+//       message: "Unauthorized",
+      
+//   })
+// }
+})
+
+
 
 module.exports = router;

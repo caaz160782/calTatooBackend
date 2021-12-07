@@ -16,7 +16,27 @@ router.get("/",async (request, response ,next)=>{
  }
   catch (error){
   next(error)
-} 
+}
+})
+
+
+router.get("/:idDate",isMember,async (request, response, next)=>{
+  const {idDate} = request.params   
+  try{    
+      const userId = await user.getById(idDate)
+      response.json({
+              ok:true,
+              message:"Done",
+              listUser:{ idDate },
+          })
+   }
+  catch (error){
+  //next(error)
+  response.status(404).json({
+      ok:false,
+      message:"User not found"
+ })
+}
 })
 
 

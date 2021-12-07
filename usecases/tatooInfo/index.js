@@ -1,9 +1,16 @@
 const InfoTattoo = require("../../models/tatooInfo").model;
 
-const get =async() =>{    
+const get =async() =>{
   const allDates= await InfoTattoo.find({}).exec();
   return allDates;
 }
+
+//ver los detalles de usurio id
+const getById = async (dateId)=>{
+  const date= await InfoTattoo.findById(userId).exec();
+  return date;
+}
+
 
 const create = async (tattooInfo) => {
   const {

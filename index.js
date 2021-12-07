@@ -6,6 +6,8 @@ const db = require("./lib/db");
 const cors = require("cors");
 const app = express();
 
+
+
 //escucha todas las solicitudes para parsear a json
 app.use(express.json());
 app.use(cors());

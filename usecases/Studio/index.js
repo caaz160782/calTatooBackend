@@ -7,13 +7,12 @@ const create = async (studioData) => {
     const savedStudio = await studio.save();
     return  savedStudio;
 }
-
 // Ver estudios
 const get =async() =>{
     const allStudio= await User.find({}).exec();
     return allStudio;
 }
-
+// Modificar info de estudios
 const update =async (studioId, studioData) =>{
     const{name,description,licenseImage,phone,social} =studioData;
     return Post.findbyIdandUpdate(studioId,{name,description,licenseImage,phone,social}).exec();

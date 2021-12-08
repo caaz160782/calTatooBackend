@@ -6,7 +6,7 @@ const schema = new Schema({
   idRole: {
     type: Schema.ObjectId,
     ref: "Rol",
-    required: true,
+   required: true,
   },
   name: {
     type: String,
@@ -23,10 +23,10 @@ const schema = new Schema({
     required: true,
   },
   email: {
-     company: {type: mongoose.SchemaTypes.Email,
+          type: mongoose.SchemaTypes.Email,
           required: true,
           correctTld: true,
-          unique:true},
+          unique:true
   },
   phoneHome: {
     type: String,

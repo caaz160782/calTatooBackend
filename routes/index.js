@@ -2,6 +2,7 @@ const rolRouter = require("./rolRouter");
 const sizeRouter = require("./sizeRouter");
 const adminRouter= require("./adminRouter");
 const loginRouter= require("./loginRouter");
+const clientRouter= require("./clientRouter")
 const staffRouter = require("./staffRouter");
 const tattoInfoRouter= require("./tattooInfoRouter");
 const studioRouter= require("./studioRouter")
@@ -11,6 +12,9 @@ const apiRouter = (app) => {
   app.use("/sizes", sizeRouter);
   app.use("/admin", adminRouter);
   app.use("/login", loginRouter);
+  app.use("/client", clientRouter);
+  
+
   app.use("/staff",staffRouter);
   app.use("/tatooInfo", tattoInfoRouter);
   app.use("/studio", studioRouter)

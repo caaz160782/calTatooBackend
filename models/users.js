@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-require('mongoose-type-email');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
   idRole: {
     type: Schema.ObjectId,
     ref: "Rol",
-   required: true,
+    required: true,
   },
   name: {
     type: String,
@@ -23,10 +22,12 @@ const schema = new Schema({
     required: true,
   },
   email: {
-          type: mongoose.SchemaTypes.Email,
-          required: true,
-          correctTld: true,
-          unique:true
+    type: String,
+    required: true,
+    trim: true,
+    maxlenght: 50,
+    minlenght: 1,
+    unique: true,
   },
   phoneHome: {
     type: String,

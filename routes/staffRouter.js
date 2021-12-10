@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const user = require("../usecases/staffs");
+const  {isAdmin} = require("../middlewares/authHandlers");
 
 
 router.post(
-  "/",
+  "/",isAdmin,
   async (request, response, next) => {
-
     try {
       const userCreated = await user.create(request.body);
       response.status(201).json({

@@ -23,9 +23,7 @@ const getById = async (userId) => {
   return user;
 };
 const update = async (userId, userData) => {
-        console.log(userId);
         const { password, ...rest } = userData;
-        console.log(password, rest);
         if (password) {
           const passwordHash = await hash.hashPassword(password);
           return User.findByIdAndUpdate(userId, {

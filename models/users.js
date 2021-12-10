@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+                 require('mongoose-type-email');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
@@ -22,9 +23,10 @@ const schema = new Schema({
     required: true,
   },
   email: {
-    type: String,
+    type: mongoose.SchemaTypes.Email,
     required: true,
     trim: true,
+    correctTld: true,
     maxlenght: 50,
     minlenght: 1,
     unique: true,

@@ -13,8 +13,8 @@ const getById = async (clientId)=>{
 }
 //crear cliente
 const create = async (clientData) => {
-    const {name, lastName,email,phonePersonal} =  clientData;          
-    const  client = new Client({name, lastName, email, phonePersonal, age, socialNetwork,picture});
+    const {name, lastName,email,phonePersonal,age,idRole,password,socialNetwork,picture} =  clientData;          
+    const  client = new Client({name, lastName, email, phonePersonal, age,password,idRole, socialNetwork,picture});
     const  savedClient= await client.save();
     return savedClient;
 };
@@ -24,9 +24,9 @@ const del = (clientId)=>{
 };
 //modificar
 const update =async (clientId,clientData) =>{
-    const{name, lastName,phonePersonal} = clientData;  
+    const{name, lastName,email,phonePersonal,age,idRole,password,socialNetwork,picture} = clientData;  
     return Client.findByIdAndUpdate(clientId,
-        {name,lastName,phonePersonal},{new: true}).exec() ;
+        {name, lastName,email,phonePersonal,age,idRole,password,socialNetwork,picture},{new: true}).exec() ;
 };
 
 module.exports = {get, getById,create,del,update}

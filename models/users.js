@@ -63,6 +63,20 @@ const schema = new Schema({
     required: true,
     minlenght: 1,
   },
+  age: {
+      type: String,
+      trim: true,
+      minlenght: 2,
+    },
+    socialNetwork: {
+      type: String,
+      trim: true,
+      maxlenght: 50,
+      minlenght: 1,
+    },
+    picture:{ 
+      type:String, 
+  },
   statusUser: Boolean,
 });
 module.exports = {

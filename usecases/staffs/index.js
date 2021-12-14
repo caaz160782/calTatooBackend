@@ -1,6 +1,5 @@
 const User = require("../../models/users").model;
 const hash = require("../../lib/crypt");
-//const jwt = require("../../lib/jwt");
 
 const create = async(userData) => {
   const { password, ...rest } = userData;
@@ -22,6 +21,7 @@ const getById = async (userId) => {
   const user = await User.findById(userId).exec();
   return user;
 };
+
 const update = async (userId, userData) => {
         const { password, ...rest } = userData;
         if (password) {

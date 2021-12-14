@@ -2,15 +2,15 @@ const User = require("../../models/users").model;
 const hash = require("../../lib/crypt");
 
 const create = async (userData) => {
-  const { name, lastName, email, password, idRole, statusUser } = userData;
+  const { idRole, name, lastName, password, email } = userData;
   const pswHash = await hash.hashPassword(password);
   const user = new User({
+    idRole,
     name,
     lastName,
-    email,
     password: pswHash,
-    idRole,
-    statusUser,
+    email,
+    statusUser: true,
   });
   const createdUser = await user.save();
   return createdUser;

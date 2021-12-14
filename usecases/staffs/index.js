@@ -35,7 +35,6 @@ const update = async (userId, userData) => {
         }
 };
 const remove = async (userId) => {
-
    await User.findByIdAndDelete(userId).exec();
   //return user;
 };

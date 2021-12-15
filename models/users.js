@@ -66,6 +66,20 @@ const schema = new Schema({
     maxLength: 50,
     minLength: 1,
   },
+  age: {
+      type: String,
+      trim: true,
+      minlenght: 2,
+    },
+    socialNetwork: {
+      type: String,
+      trim: true,
+      maxlenght: 50,
+      minlenght: 1,
+    },
+    picture:{ 
+      type:String, 
+  },
   statusUser: Boolean,
   addedDate : { 
     type: Date, 

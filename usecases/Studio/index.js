@@ -1,23 +1,63 @@
-const tatooStudio =require("../../models/tatooStudio").model;
+const tatooStudio = require("../../models/tatooStudio").model;
 
 // Crear estudio
 const create = async (studioData) => {
-    const {name,description,licenseImage,phone,social} = studioData;
-    const studio = new Studio({id_user,name,description,licenseImage,phone,social});
-    const savedStudio = await studio.save();
-    return  savedStudio;
-}
-// Ver estudios
-const get =async() =>{
-    const allStudio= await User.find({}).exec();
-    return allStudio;
-}
+  const {
+    id_user,
+    name,
+    description,
+    licenseImage,
+    postalCode,
+    phoneWhatsApp,
+    phoneStudio,
+    rfc,
+    social,
+  } = studioData;
+  const studio = new tatooStudio({
+    id_user,
+    name,
+    description,
+    licenseImage,
+    postalCode,
+    phoneWhatsApp,
+    phoneStudio,
+    rfc,
+    social,
+  });
+  const savedStudio = await studio.save();
+  return savedStudio;
+};
+
+const getById = async (idStudio) => {
+       const studio = await tatooStudio.findById(idStudio).exec();
+    return studio;
+  };
+
+
 // Modificar info de estudios
-const update =async (studioId, studioData) =>{
-    const{name,description,licenseImage,phone,social} =studioData;
-    return Post.findbyIdandUpdate(studioId,{name,description,licenseImage,phone,social}).exec();
-}
+const update = async (studioId, studioData) => {
+    
+  const {
+    name,
+    description,
+    licenseImage,
+    postalCode,
+    phoneWhatsApp,
+    phoneStudio,
+    rfc,
+    social,
+  } = studioData;
 
+  return tatooStudio.findByIdAndUpdate(studioId, {
+    name,
+    description,
+    licenseImage,
+    postalCode,
+    phoneWhatsApp,
+    phoneStudio,
+    rfc,
+    social,
+    },{new: true}).exec();
+};
 
-
-module.exports = {create,get,update}
+module.exports = { create, update,getById };

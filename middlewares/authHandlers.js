@@ -12,8 +12,9 @@ const validarCampos = (req, res, next) => {
 const isAdmin = (req, res, next) => {
   const { apitoken } = req.headers;
   const verify = jwt.verify(apitoken);
-  const { rol } = verify;
+  const { rol,sub } = verify;
   if (rol === "Administrador") {
+    req.id=sub;
     next();
   } else {
     res.status(403).json({

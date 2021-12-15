@@ -15,6 +15,6 @@ const apiRouter = (app) => {
   app.use("/client", clientRouter);
   app.use("/staff",staffRouter);
   app.use("/tatooInfo", tattoInfoRouter);
-  //app.use("/studio", studioRouter);
+  app.use("/studio", studioRouter);
 };
 module.exports = apiRouter;

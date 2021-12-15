@@ -1,12 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const user = require("../usecases/staffs");
+const { pswDefinition ,defPhoneNumber,defphonePersonal,defCurp,defRfc} = require("../middlewares/typesVerified");
+const { isAdmin,validarCampos } = require("../middlewares/authHandlers");
+const { check } = require("express-validator");
+const { existEmail } = require("../usecases/verifica.js");
 
 
 router.post(
-  "/",
-  async (request, response, next) => {
-
+  "/",isAdmin,
+  [check("email").custom(existEmail), validarCampos],
+  [check("email", "el correo no es valido").isEmail(), validarCampos],
+  pswDefinition,
+  defPhoneNumber,
+  defphonePersonal,
+  defCurp,
+  defRfc
+  ,async (request, response, next) => {
     try {
       const userCreated = await user.create(request.body);
       response.status(201).json({
@@ -22,7 +32,7 @@ router.post(
   }
 );
 
-router.get("/", async (request, response, next) => {
+router.get("/",isAdmin, async (request, response, next) => {
   try {
     const users = await user.get();
     response.json({
@@ -37,7 +47,7 @@ router.get("/", async (request, response, next) => {
   }
 });
 
-router.get("/:idUser", async (request, response, next) => {
+router.get("/:idUser", isAdmin,async (request, response, next) => {
   const { idUser } = request.params;
   try {
     const userFound = await user.getById(idUser);
@@ -54,7 +64,7 @@ router.get("/:idUser", async (request, response, next) => {
   }
 });
 
-router.delete("/:idUser", (request, response, next) => {
+router.delete("/:idUser",isAdmin, (request, response, next) => {
   try {
     const { idUser } = request.params;
     const userId = user.remove(idUser);
@@ -67,13 +77,10 @@ router.delete("/:idUser", (request, response, next) => {
   }
 });
 
-router.patch("/:idUser", async (request, response, next) => {
+router.patch("/:idUser",isAdmin, async (request, response, next) => {
   const { idUser } = request.params;
-  console.log(idUser);
- // const userId = request.id;
   const userData = request.body;
-
-    try {
+  try {
       const userUpdate = await user.update(idUser, userData);
       response.status(201).json({
         ok: true,

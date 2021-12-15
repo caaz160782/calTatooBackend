@@ -1,14 +1,25 @@
 const User = require("../../models/users").model;
 const hash = require("../../lib/crypt");
+const jwt =require("../../lib/jwt");
+const { check } = require("express-validator");
 
 const find = async (userAccess) => {
   const { email, pasword } = userAccess;
-  const found = await User.findOne({ email }).exec();
-  if (found !== null) {
-    const { _id, name, lastName, email, password } = found;
+  const found = await User.findOne({ email }).populate("idRole",['rol']);
+    if (found !== null) {
+    const { _id, name, lastName,idRole,password } = found;
+    const rol=idRole.rol;
+    const fullName=name+' '+ lastName;
+
     const match = await hash.verifyPassword(pasword, password);
     if (match) {
-      return { message: 1 };
+      const payload={
+                    sub: _id.toString(),
+                    name:fullName,
+                    rol
+                  }
+      const token= jwt.token(payload);
+      return{token,message:1};
     } else {
       return { message: 2 };
     }

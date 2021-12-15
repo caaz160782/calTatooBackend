@@ -72,7 +72,18 @@ const defPhoneNumber = async (req, res, next) => {
     }
   };
 
-
+  const verifiedAge = async (req, res, next) => {
+    const clientData = req.body;
+    const { age } = clientData;
+    if ( age <= 18) {
+        next();
+    }
+    else{
+        return res.status(404).json({
+            message: "No eres mayor de edad",
+          });
+    }
+  };
 
   
-module.exports = { pswDefinition,defPhoneNumber,defphonePersonal,defCurp,defRfc};
+module.exports = { pswDefinition,defPhoneNumber,defphonePersonal,defCurp,defRfc,verifiedAge};

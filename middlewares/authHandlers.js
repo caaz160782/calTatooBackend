@@ -30,8 +30,7 @@ const isAdmin = (req, res, next) => {
     }
     catch(error)
     {
-     //console.log("error",error.name)
-     let  {name}=error;
+      let  {name}=error;
       if(name==="TokenExpiredError"){
          res.status(401).json({
          code: "TokenExpiredError",

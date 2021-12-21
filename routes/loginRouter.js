@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const login = require("../usecases/login");
-const { validarCampos } = require("../middlewares/authHandlers");
-const { check } = require("express-validator");
+const {emailVerifiqued} = require("../middlewares/typesVerified");
 
 router.post(
   "/",
-  [check("email", "el correo no es valido").isEmail(), validarCampos],
+  emailVerifiqued,
   async (req, res, next) => {
     try {
       const userAccess = req.body;
@@ -19,12 +18,14 @@ router.post(
         });
       } else if (message === 2) {
         res.status(404).json({
-          status: "404-2",
+           code: "Email/PSW WRONG",
+           message: "email or password wrong",
         });
       } else if (message === 3) {
         res.status(404).json({
-          status: "404-3",
-          message: "email no registrado",
+          //status: "404-3",
+          code:"EMAIL_NOT_FOUND",
+          error:"email not found"
         });
       }
     } catch (error) {

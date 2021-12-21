@@ -1,16 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const user = require("../usecases/admin");
-const { pswDefinition } = require("../middlewares/typesVerified");
 const { validarCampos } = require("../middlewares/authHandlers");
 const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
+const {
+  nameNull,
+  pswDefinition,
+  idNull,
+  emailVerifiqued,
+} = require("../middlewares/typesVerified");
 
 router.post(
   "/",
-  [check("email").custom(existEmail), validarCampos],
-  [check("email", "el correo no es valido").isEmail(), validarCampos],
+  idNull,
+  nameNull,
   pswDefinition,
+  emailVerifiqued,
+  [check("email").custom(existEmail), validarCampos],
   async (req, res, next) => {
     try {
       const userData = req.body;

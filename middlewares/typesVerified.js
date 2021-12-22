@@ -2,7 +2,7 @@ const { existEmail } = require("../usecases/verifica.js");
 
 const nameNull = async (req, res, next) => {
   const userData = req.body;
-  const { name, lastName } = userData;
+  const { name} = userData;
   if (name === "") {
     return res.status(404).json({
       code: "NAME_EMPTY",
@@ -11,6 +11,11 @@ const nameNull = async (req, res, next) => {
   } else {
     next();
   }
+};
+
+const lastNameNull =async(req,res,next)=>{
+  const userData = req.body;
+  const {lastName} = userData;
   if (lastName === "") {
     return res.status(404).json({
       code: "LASTNAME_EMPTY",
@@ -19,7 +24,8 @@ const nameNull = async (req, res, next) => {
   } else {
     next();
   }
-};
+}
+
 
 const idNull = async (req, res, next) => {
   const userData = req.body;
@@ -158,6 +164,7 @@ const defRfc = async (req, res, next) => {
 
 module.exports = {
   nameNull,
+  lastNameNull,
   idNull,
   pswDefinition,
   emailVerifiqued,

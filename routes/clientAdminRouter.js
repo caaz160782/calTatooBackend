@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const client = require("../usecases/client");
-const {isAdmin, isStaff, validarCampos} = require("../middlewares/authHandlers");
-const { verifiedAge, pswDefinition, defPhoneNumber } = require("../middlewares/typesVerified");
+const {isAdmin,isMember, validarCampos} = require("../middlewares/authHandlers");
+const { verifiedAge, pswDefinition, defphonePersonal } = require("../middlewares/typesVerified");
 const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
 
 //cliente por id
-router.get("/:idClient", isAdmin, isStaff, async (request, response, next) => {
+router.get("/:idClient", isMember,  async (request, response, next) => {
   const { idClient } = request.params;
   try {
     const clientId = await client.getById(idClient);
@@ -24,7 +24,7 @@ router.get("/:idClient", isAdmin, isStaff, async (request, response, next) => {
   }
 });
 //lista clientes
-router.get("/", async (request, response, next) => {
+router.get("/",isMember, async (request, response, next) => {
   try {
     const clients = await client.get();
     response.json({
@@ -43,8 +43,8 @@ router.post(
   "/",
   verifiedAge,
   pswDefinition,
-  isAdmin,
-  defPhoneNumber,  
+  isMember,
+  defphonePersonal,
   [check("email").custom(existEmail), validarCampos],
   [check("email", "el correo no es valido").isEmail(), validarCampos],
   async (request, response, next) => {
@@ -64,9 +64,8 @@ router.post(
   }
 );
 
-router.patch("/:idClient", isAdmin, async (request, response, next) => {
-  console.log(`request`, request);
-  const { idClient } = request.params;
+router.patch("/:idClient", isMember, async (request, response, next) => {
+  const {idClient} = request.params;
   const clientData = request.body;
   const clientId = clientData._id;
 

@@ -79,7 +79,10 @@ const schema = new Schema({
     picture:{ 
       type:String, 
   },
-  statusUser: Boolean,
+  statusUser:{
+    type: Boolean,
+    default: true,
+  },
   addedDate : { 
     type: Date, 
     default: Date.now 

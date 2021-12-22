@@ -6,6 +6,7 @@ const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
 const {
   nameNull,
+  lastNameNull,
   pswDefinition,
   idNull,
   emailVerifiqued,
@@ -13,9 +14,10 @@ const {
 
 router.post(
   "/",
-  idNull,
-  nameNull,
-  pswDefinition,
+   idNull,
+   nameNull,
+   lastNameNull,
+   pswDefinition,
   emailVerifiqued,
   [check("email").custom(existEmail), validarCampos],
   async (req, res, next) => {
@@ -29,6 +31,7 @@ router.post(
           adminCreated,
         },
       });
+
     } catch (error) {
       next(error);
     }

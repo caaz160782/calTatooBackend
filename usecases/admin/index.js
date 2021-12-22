@@ -9,8 +9,7 @@ const create = async (userData) => {
     name,
     lastName,
     password: pswHash,
-    email,
-    statusUser: true,
+    email    
   });
   const createdUser = await user.save();
   return createdUser;

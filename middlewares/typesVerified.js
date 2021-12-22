@@ -122,15 +122,39 @@ const defRfc = async (req, res, next) => {
   const regex =
     /^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\d]{3}))?$/;
 
-  if (rfc.match(regex) === null) {
-    return res.status(404).json({
-      code:"RFC_WRONG",
-      message: "rfc format is not correct",
-    });
-  } else {
-    next();
-  }
-};
+    if (rfc.match(regex) === null) {
+        return res.status(404).json({
+          code:"RFC_WRONG",
+          message: "rfc format is not correct",
+        });
+      }
+      else{
+       next();
+    }
+  };
+
+  const verifiedAge = async (req, res, next) => {
+    const clientData = req.body;
+    const { age } = clientData;
+    if ( age >= 18) {
+        next();
+    }
+    else{
+        return res.status(404).json({
+            message: "No eres mayor de edad",
+            code: "AGE_WRONG",
+          });
+    }
+  };
+//   if (rfc.match(regex) === null) {
+//     return res.status(404).json({
+      // code:"RFC_WRONG",
+      // message: "rfc format is not correct",
+//     });
+//   } else {
+//     next();
+//   }
+// };
 
 module.exports = {
   nameNull,
@@ -141,4 +165,5 @@ module.exports = {
   defphonePersonal,
   defCurp,
   defRfc,
+  verifiedAge
 };

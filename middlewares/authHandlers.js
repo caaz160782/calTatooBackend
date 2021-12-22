@@ -51,4 +51,33 @@ const isAdmin = (req, res, next) => {
   }
 };
 
-module.exports = { isAdmin, validarCampos };
+const isStaff = (req,resp,next) =>{
+  const { apitoken } = req.headers;
+  const verif = jwt.verify(apitoken);
+  const { rol,sub } = verify;
+  if (rol === "Staff") {
+    req.id = sub;
+    next();
+  } else {
+    res.status(403).json({
+      message: "Unauthorized",
+    });
+  }
+};
+
+
+const isClient = (req,res,next)=>{
+  const {apitoken}= req.headers;
+  const verify= jwt.verify(apitoken);
+  const { rol,sub } = verify;
+  if (rol === "Cliente"){
+    req.id = sub;
+      next();
+  }else{
+      res.status(403).json({
+          message: " Unauthorized"
+      }); 
+  }
+};
+
+module.exports = { isAdmin, validarCampos, isClient, isStaff};

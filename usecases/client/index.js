@@ -1,4 +1,5 @@
 const Client = require ("../../models/users").model;
+const hash = require("../../lib/crypt");
 
 //listar  clientes
 const  get =async() =>{    
@@ -13,8 +14,9 @@ const getById = async (clientId)=>{
 }
 //crear cliente
 const create = async (clientData) => {
-    const {name, lastName,email,phonePersonal,age,idRole,password,socialNetwork,picture} =  clientData;          
-    const  client = new Client({name, lastName, email, phonePersonal, age,password,idRole, socialNetwork,picture});
+    const {name, lastName,email,phonePersonal,age,idRole,password,socialNetwork,picture} =  clientData;
+    const pswHash = await hash.hashPassword(password);          
+    const  client = new Client({name, lastName, email, phonePersonal, age,password: pswHash,idRole, socialNetwork,picture});
     const  savedClient= await client.save();
     return savedClient;
 };

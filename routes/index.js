@@ -7,6 +7,7 @@ const staffRouter = require("./staffRouter");
 const tattoInfoRouter= require("./tattooInfoRouter");
 const studioRouter= require("./studioRouter")
 const clientModifiedRouter = require("./clientModifiedRouter");
+const ubicacionRouter= require("./ubicacionRouter");
 
 const apiRouter = (app) => {
   app.use("/rols", rolRouter);
@@ -18,5 +19,6 @@ const apiRouter = (app) => {
   app.use("/tatooInfo", tattoInfoRouter);
   app.use("/studio", studioRouter);
   app.use("/clientModified", clientModifiedRouter);
+  app.use("/localidad", ubicacionRouter);
 };
 module.exports = apiRouter;

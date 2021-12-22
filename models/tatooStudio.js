@@ -34,15 +34,30 @@ const schema = new Schema({
     minLength: 1,
   },
   postalCode: {
-    type: String,
+    type: Number,
     trim: true,
-    maxLength: 6,
-    minLength: 1,
     required: true,
   },
-  /*municipality:{},
-   state:{},
-   city:{},*/
+  municipality:{
+      type:String,
+      maxLength:50,
+      required:true,
+   },
+   state:{
+    type:String,
+    maxLength:50,
+    required:true,
+   },
+   city:{
+    type:String,
+    maxLength:50,
+    required:true,
+   },
+   address:{
+    type:String,
+    maxLength:100,
+    required:true,
+   },
   phoneStudio: {
     type: String,
     trim: true,

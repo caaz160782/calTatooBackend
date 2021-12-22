@@ -75,7 +75,7 @@ const defPhoneNumber = async (req, res, next) => {
   const verifiedAge = async (req, res, next) => {
     const clientData = req.body;
     const { age } = clientData;
-    if ( age <= 18) {
+    if ( age >= 18) {
         next();
     }
     else{

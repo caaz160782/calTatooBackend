@@ -1,26 +1,39 @@
 const mongoose = require("mongoose");
-const Schema = moongoose.Schema;
+const Schema = mongoose.Schema;
 
 const schema = new Schema({
+  id_tatoostudios: {
+    type: Schema.ObjectId,
+    ref: "TatooStudio",
+    required: true,
+  },
   logo: {
     type: String,
     minlenght: 1,
   },
   timeToOpen: {
-    type: Number,
+    type: String,
     required: true,
   },
   timeToClose: {
-    type: Number,
+    type: String,
     required: true,
   },
-  dateAvailable: {
+  dayAvailables: {
     type: Array,
     required: false,
   },
   notifications: {
-    type: Array,
+    type: String,
     required: false,
+  },
+  statusSetting:{
+    type: Boolean,
+    default: true,
+  },
+  addedDate : { 
+    type: Date, 
+    default: Date.now 
   },
 });
 module.exports = {

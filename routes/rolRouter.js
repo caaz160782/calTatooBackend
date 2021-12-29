@@ -11,8 +11,7 @@ router.get("/", async (request, response, next) => {
       payload: rols,
     });
   } catch (error) {
-    //next(error);
-    console.log(error)
+    next(error);
   }
 });
 

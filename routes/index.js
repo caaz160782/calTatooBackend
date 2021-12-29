@@ -8,6 +8,8 @@ const tattoInfoRouter= require("./tattooInfoRouter");
 const studioRouter= require("./studioRouter")
 const clientModifiedRouter = require("./clientModifiedRouter");
 const ubicacionRouter= require("./ubicacionRouter");
+const settingStudioRouter= require("./settingStudioRouter");
+const catRemClientRouter= require("./caRememberRouter");
 
 const apiRouter = (app) => {
   app.use("/rols", rolRouter);
@@ -20,5 +22,7 @@ const apiRouter = (app) => {
   app.use("/studio", studioRouter);
   app.use("/clientModified", clientModifiedRouter);
   app.use("/localidad", ubicacionRouter);
+  app.use("/setting", settingStudioRouter);
+  app.use("/clientRemember", catRemClientRouter);
 };
 module.exports = apiRouter;

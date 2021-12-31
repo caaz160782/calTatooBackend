@@ -1,0 +1,5 @@
+applications:
+- name: perfectIimeInk
+  memory: 128M
+  random-route: true
+  buildpack: nodejs_buildpack

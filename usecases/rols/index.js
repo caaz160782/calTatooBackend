@@ -5,4 +5,9 @@ const get = async () => {
   return allRols;
 };
 
-module.exports = { get };
+const find = async (rol) => {
+  const Rols = await Rol.findOne({rol}).exec();
+  return Rols;
+};
+
+module.exports = { get,find };

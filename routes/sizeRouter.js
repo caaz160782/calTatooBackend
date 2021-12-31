@@ -4,7 +4,7 @@ const rol = require("../usecases/sizes");
 
 router.get("/", async (request, response, next) => {
   try {
-    const size = await rol.get();
+    const size = await size.get();
     response.json({
       ok: true,
       message: "Done",

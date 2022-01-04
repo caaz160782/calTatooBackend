@@ -10,11 +10,12 @@ router.post(
     try {
       const userAccess = req.body;
       const resFind = await login.find(userAccess);
-      const { message, token } = resFind;
+      const { message, token,infoUser } = resFind;
       if (message === 1) {
         res.status(202).json({
-          status: "ingreso correcto",
-          token: token,
+             auth: true,
+             token: token,
+             infoUser:infoUser
         });
       } else if (message === 2) {
         res.status(404).json({

@@ -7,18 +7,24 @@ const find = async (userAccess) => {
   const passwordF=password;
   const found = await User.findOne({ email }).populate("idRole",['rol']);
     if (found !== null) {
-    const { _id, name, lastName,idRole,password } = found;
+    const { _id, name,lastName, picture,idRole,password } = found;
     const rol=idRole.rol;
+    const idRol=idRole._id;
     const fullName=name+' '+ lastName;
     const match = await hash.verifyPassword(passwordF, password);
     if (match) {
       const payload={
                     sub: _id.toString(),
                     name:fullName,
+                    idRol,
                     rol
                   }
       const token= jwt.token(payload);
-      return{token,message:1};
+      const infoUser={rol,
+                      name:fullName,
+                      picture
+                      }
+      return{token,message:1,infoUser};
     } else {
       return { message: 2 };
     }

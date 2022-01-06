@@ -1,10 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const studioTat = require("../usecases/Studio");
+<<<<<<< Updated upstream
 
 
 // router.post("/", isAdmin,async (request, response, next) => {
   router.post("/",async (request, response, next) => {
+=======
+// const { isAdmin} = require("../middlewares/authHandlers");
+
+
+// router.post("/", isAdmin,async (request, response, next) => {
+router.post("/",async (request, response, next) => {
+>>>>>>> Stashed changes
   try {
     const studioData = request.body;
     console.log(studioData);
@@ -39,7 +47,11 @@ const studioTat = require("../usecases/Studio");
 
 
 // router.patch("/:idStudio",isAdmin, async (request, response, next) => {
+<<<<<<< Updated upstream
 router.patch("/:idStudio", async (request, response, next) => {
+=======
+router.patch("/:idStudio", async (request, response, next) => {  
+>>>>>>> Stashed changes
     const { idStudio } = request.params;
     const studioData = request.body;
     try {

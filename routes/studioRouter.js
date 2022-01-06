@@ -2,10 +2,18 @@ const express = require("express");
 const router = express.Router();
 const studioTat = require("../usecases/Studio");
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
 // router.post("/", isAdmin,async (request, response, next) => {
   router.post("/",async (request, response, next) => {
+=======
+// const { isAdmin} = require("../middlewares/authHandlers");
+
+
+// router.post("/", isAdmin,async (request, response, next) => {
+router.post("/",async (request, response, next) => {
+>>>>>>> Stashed changes
 =======
 // const { isAdmin} = require("../middlewares/authHandlers");
 
@@ -28,7 +36,11 @@ router.post("/",async (request, response, next) => {
 });
 
 // router.get("/:idStudio",isAdmin, async (request, response, next) => {
+<<<<<<< Updated upstream
   router.get("/:idStudio", async (request, response, next) => {
+=======
+router.get("/:idStudio", async (request, response, next) => {
+>>>>>>> Stashed changes
     const { idStudio } = request.params;
     try {
       const studioFound = await studioTat.getById(idStudio);
@@ -48,9 +60,14 @@ router.post("/",async (request, response, next) => {
 
 // router.patch("/:idStudio",isAdmin, async (request, response, next) => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 router.patch("/:idStudio", async (request, response, next) => {
 =======
 router.patch("/:idStudio", async (request, response, next) => {  
+>>>>>>> Stashed changes
+=======
+router.patch("/:idStudio", async (request, response, next) => {
+
 >>>>>>> Stashed changes
     const { idStudio } = request.params;
     const studioData = request.body;

@@ -35,7 +35,7 @@ const isAdmin = (req, res, next) => {
          res.status(401).json({
          code: "TokenExpiredError",
          message: "timeExpired",
-        });S
+        });
       }
       else if(name==="JsonWebTokenError"){
          res.status(403).json({

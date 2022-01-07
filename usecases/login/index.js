@@ -20,7 +20,8 @@ const find = async (userAccess) => {
                     rol
                   }
       const token= jwt.token(payload);
-      const infoUser={rol,
+      const infoUser={_id,
+                      rol,
                       name:fullName,
                       picture
                       }

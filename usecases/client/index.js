@@ -3,13 +3,21 @@ const hash = require("../../lib/crypt");
 
 //listar  clientes
 const  get =async() =>{    
-    const allClient= await Client.find({}).exec();
+    const allClient= await Client.find({})
+    .populate("idRole", ["rol"])
+    .where("idRole")
+    .equals("61bbeeca3143f1d4146eec10")
+    .exec();
     return allClient;
 }
 
 //ver los detalles de cliente  id
 const getById = async (clientId)=>{
-    const client= await Client.findById(clientId).exec();
+    const client= await Client.findById(clientId)
+    .populate("idRole", ["rol"])
+    .where("idRole")
+    .equals("61bbeeca3143f1d4146eec10")
+    .exec();
     return client;
 }
 //crear cliente

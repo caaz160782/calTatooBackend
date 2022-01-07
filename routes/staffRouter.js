@@ -5,19 +5,25 @@ const { pswDefinition ,defPhoneNumber,defphonePersonal,defCurp,defRfc} = require
 const { isAdmin,validarCampos } = require("../middlewares/authHandlers");
 const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
+const { subirArchivo } = require("../lib/subiendoArchivos");
 
 
 router.post(
-  "/",isAdmin,
-  [check("email").custom(existEmail), validarCampos],
-  [check("email", "el correo no es valido").isEmail(), validarCampos],
-  pswDefinition,
-  defPhoneNumber,
-  defphonePersonal,
-  defCurp,
-  defRfc
-  ,async (request, response, next) => {
+  "/"
+  ,isAdmin,
+   [check("email").custom(existEmail), validarCampos],
+   [check("email", "el correo no es valido").isEmail(), validarCampos],
+   pswDefinition,
+   defPhoneNumber,
+   defphonePersonal,
+   defCurp,
+   defRfc,
+   subirArchivo,
+   async (request, response, next) => {
     try {
+      if (request.file.filename) {
+        request.body.picture = request.file.filename;
+      }
       const userCreated = await user.create(request.body);
       response.status(201).json({
         status: "ok",

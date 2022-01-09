@@ -2,8 +2,9 @@ const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const settingStudio = require("../usecases/setting");
+const { isAdmin } = require("../middlewares/authHandlers");
 
-router.post("/", async (req, res, next) => {
+router.post("/", isAdmin, async (req, res, next) => {
   try {
     const settingData = req.body;
     const settingCreated = await settingStudio.create(settingData);
@@ -21,11 +22,12 @@ router.post("/", async (req, res, next) => {
 
 router.get("/:idSetting", async (req, res, next) => {
   const { idSetting } = req.params;
+  //console.log(1,idSetting)
   try {
-    const settingFound = await settingStudio.getById(idSetting);
+    const settingsStudio = await settingStudio.getById(idSetting);
     res.json({
       message: "Done",
-      payload: { settingFound },
+      payload: settingsStudio,
     });
   } catch (error) {
     res.status(404).json({

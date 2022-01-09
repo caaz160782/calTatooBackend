@@ -79,13 +79,21 @@ const schema = new Schema({
     picture:{ 
       type:String, 
   },
+  registerStudio:{
+    type: Boolean,
+    default: false,
+  },
+  finishConfig:{
+    type: Boolean,
+    default: false,
+  },
   statusUser:{
     type: Boolean,
     default: true,
   },
-  addedDate : { 
-    type: Date, 
-    default: Date.now 
+  addedDate : {
+    type: Date,
+    default: Date.now
   },
 
 });

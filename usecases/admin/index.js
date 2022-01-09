@@ -9,10 +9,23 @@ const create = async (userData) => {
     name,
     lastName,
     password: pswHash,
-    email    
+    email,
   });
   const createdUser = await user.save();
   return createdUser;
 };
 
-module.exports = { create };
+const update = async (userId, registerStudio, finishConfig) => {
+  /*const { logo, timeToOpen, timeToClose, dayAvailables, notifications } =
+    settingData;*/
+  return User.findByIdAndUpdate(
+    userId,
+    {
+      registerStudio,
+      finishConfig,
+    },
+    { new: true }
+  ).exec();
+};
+
+module.exports = { create, update };

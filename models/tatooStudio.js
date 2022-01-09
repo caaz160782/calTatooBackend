@@ -24,8 +24,6 @@ const schema = new Schema({
   licenseImage: {
     type: String,
     trim: true,
-    maxLength: 100,
-    minLength: 1,
   },
   rfc: {
     type: String,
@@ -38,26 +36,26 @@ const schema = new Schema({
     trim: true,
     required: true,
   },
-  municipality:{
-      type:String,
-      maxLength:50,
-      required:true,
-   },
-   state:{
-    type:String,
-    maxLength:50,
-    required:true,
-   },
-   city:{
-    type:String,
-    maxLength:50,
-    required:true,
-   },
-   address:{
-    type:String,
-    maxLength:100,
-    required:true,
-   },
+  municipality: {
+    type: String,
+    maxLength: 50,
+    required: true,
+  },
+  state: {
+    type: String,
+    maxLength: 50,
+    required: true,
+  },
+  city: {
+    type: String,
+    maxLength: 50,
+    required: true,
+  },
+  address: {
+    type: String,
+    maxLength: 100,
+    required: true,
+  },
   phoneStudio: {
     type: String,
     trim: true,

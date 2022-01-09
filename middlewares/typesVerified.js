@@ -2,7 +2,7 @@ const { existEmail } = require("../usecases/verifica.js");
 
 const nameNull = async (req, res, next) => {
   const userData = req.body;
-  const { name} = userData;
+  const { name } = userData;
   if (name === "") {
     return res.status(404).json({
       code: "NAME_EMPTY",
@@ -13,9 +13,9 @@ const nameNull = async (req, res, next) => {
   }
 };
 
-const lastNameNull =async(req,res,next)=>{
+const lastNameNull = async (req, res, next) => {
   const userData = req.body;
-  const {lastName} = userData;
+  const { lastName } = userData;
   if (lastName === "") {
     return res.status(404).json({
       code: "LASTNAME_EMPTY",
@@ -24,8 +24,7 @@ const lastNameNull =async(req,res,next)=>{
   } else {
     next();
   }
-}
-
+};
 
 const idNull = async (req, res, next) => {
   const userData = req.body;
@@ -87,7 +86,7 @@ const defPhoneNumber = async (req, res, next) => {
     next();
   } else {
     return res.status(404).json({
-      code:"FORMAT_HOMEPHONE_WRONG",
+      code: "FORMAT_HOMEPHONE_WRONG",
       message: "the Home Phone It's not valid",
     });
   }
@@ -100,7 +99,7 @@ const defphonePersonal = async (req, res, next) => {
     next();
   } else {
     return res.status(404).json({
-      code:"FORMAT_CELPHONE_WRONG",
+      code: "FORMAT_CELPHONE_WRONG",
       message: "the Celphone  It's not valid",
     });
   }
@@ -114,7 +113,7 @@ const defCurp = async (req, res, next) => {
 
   if (curp.match(regex) === null) {
     return res.status(404).json({
-      code:"CURP_WRONG",
+      code: "CURP_WRONG",
       error: "curp format is not correct",
     });
   } else {
@@ -128,39 +127,28 @@ const defRfc = async (req, res, next) => {
   const regex =
     /^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\d]{3}))?$/;
 
-    if (rfc.match(regex) === null) {
-        return res.status(404).json({
-          code:"RFC_WRONG",
-          message: "rfc format is not correct",
-        });
-      }
-      else{
-       next();
-    }
-  };
+  if (rfc.match(regex) === null) {
+    return res.status(404).json({
+      code: "RFC_WRONG",
+      message: "rfc format is not correct",
+    });
+  } else {
+    next();
+  }
+};
 
-  const verifiedAge = async (req, res, next) => {
-    const clientData = req.body;
-    const { age } = clientData;
-    if ( age >= 18) {
-        next();
-    }
-    else{
-        return res.status(404).json({
-            message: "No eres mayor de edad",
-            code: "AGE_WRONG",
-          });
-    }
-  };
-//   if (rfc.match(regex) === null) {
-//     return res.status(404).json({
-      // code:"RFC_WRONG",
-      // message: "rfc format is not correct",
-//     });
-//   } else {
-//     next();
-//   }
-// };
+const verifiedAge = async (req, res, next) => {
+  const clientData = req.body;
+  const { age } = clientData;
+  if (age >= 18) {
+    next();
+  } else {
+    return res.status(404).json({
+      message: "No eres mayor de edad",
+      code: "AGE_WRONG",
+    });
+  }
+};
 
 module.exports = {
   nameNull,
@@ -172,5 +160,5 @@ module.exports = {
   defphonePersonal,
   defCurp,
   defRfc,
-  verifiedAge
+  verifiedAge,
 };

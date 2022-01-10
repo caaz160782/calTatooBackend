@@ -37,7 +37,10 @@ router.post(
       const studioData = request.body;
       const { id_user } = request.body;
       const studioCreated = await studioTat.create(studioData);
-      const upUsRegStudio = await user.update(id_user, (registerStudio = true));
+      const upUsRegStudio = await user.updateRegister(
+        id_user,
+        (registerStudio = true)
+      );
       response.status(201).json({
         ok: true,
         message: "Created successfully",

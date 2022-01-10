@@ -2,12 +2,18 @@ const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const settingStudio = require("../usecases/setting");
+const user = require("../usecases/admin");
 const { isAdmin } = require("../middlewares/authHandlers");
 
 router.post("/", isAdmin, async (req, res, next) => {
   try {
     const settingData = req.body;
+    const id_user = req.id;
     const settingCreated = await settingStudio.create(settingData);
+    const upUsfinishConfig = await user.updateFinishConfig(
+      id_user,
+      (finishConfig = true)
+    );
     res.status(201).json({
       status: "ok",
       message: "Created succsesfully",

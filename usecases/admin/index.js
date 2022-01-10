@@ -15,17 +15,24 @@ const create = async (userData) => {
   return createdUser;
 };
 
-const update = async (userId, registerStudio, finishConfig) => {
-  /*const { logo, timeToOpen, timeToClose, dayAvailables, notifications } =
-    settingData;*/
+const updateRegister = async (userId, registerStudio) => {
   return User.findByIdAndUpdate(
     userId,
     {
       registerStudio,
+    },
+    { new: true }
+  ).exec();
+};
+
+const updateFinishConfig = async (userId, finishConfig) => {
+  return User.findByIdAndUpdate(
+    userId,
+    {
       finishConfig,
     },
     { new: true }
   ).exec();
 };
 
-module.exports = { create, update };
+module.exports = { create, updateRegister, updateFinishConfig };

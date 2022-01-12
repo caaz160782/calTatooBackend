@@ -10,7 +10,7 @@ const schema = new Schema({
   name: {
     type: String,
     trim: true,
-    maxLength: 20,
+    maxLength: 100,
     minLength: 1,
     required: true,
   },

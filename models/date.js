@@ -26,6 +26,10 @@ const schema = new Schema({
     type: Number,
     required: true,
   },
+  addedDate: {
+    type: Date,
+    default: Date.now,
+  },
   finished: Boolean,
 });
 

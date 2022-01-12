@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const user = require("../usecases/staffs");
+const rol = require("../usecases/rols");
 const {
   pswDefinition,
   defPhoneNumber,
   defphonePersonal,
+  emailVerifiqued,
   defCurp,
   defRfc,
 } = require("../middlewares/typesVerified");
@@ -17,7 +19,7 @@ router.post(
   "/",
   isAdmin,
   [check("email").custom(existEmail), validarCampos],
-  //[check("email", "el correo no es valido").isEmail(), validarCampos],
+  emailVerifiqued,
   pswDefinition,
   defPhoneNumber,
   defphonePersonal,
@@ -26,17 +28,24 @@ router.post(
   subirArchivo,
   async (request, response, next) => {
     try {
-      if (request.file.filename) {
-        request.body.picture = request.file.filename;
+      let userData = request.body;
+      const { Role } = request.body;
+      if (Role === "Tatoo") {
+        if (request.file.filename) {
+          request.body.picture = request.file.filename;
+        }
+        const rols = await rol.find("Tatuador");
+        const { _id } = rols;
+        //userData = { ...userData, idRole: _id.toString() };
+        const userCreated = await user.create(userData);
+        response.status(201).json({
+          status: "ok",
+          message: "Created successfully",
+          payload: {
+            userCreated,
+          },
+        });
       }
-      const userCreated = await user.create(request.body);
-      response.status(201).json({
-        status: "ok",
-        message: "Created successfully",
-        payload: {
-          userCreated,
-        },
-      });
     } catch (error) {
       next(error);
     }

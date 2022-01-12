@@ -2,12 +2,18 @@ const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const settingStudio = require("../usecases/setting");
+const admin = require("../usecases/admin");
 const { isAdmin } = require("../middlewares/authHandlers");
 
 router.post("/", isAdmin, async (req, res, next) => {
   try {
     const settingData = req.body;
+    const id_user = req.id;
     const settingCreated = await settingStudio.create(settingData);
+    const upFinConfigStudio = await admin.updateFinConfig(
+      id_user,
+      (finishConfig = true)
+    );
     res.status(201).json({
       status: "ok",
       message: "Created succsesfully",
@@ -20,9 +26,9 @@ router.post("/", isAdmin, async (req, res, next) => {
   }
 });
 
-router.get("/:idSetting", async (req, res, next) => {
+router.get("/:idSetting", isAdmin, async (req, res, next) => {
   const { idSetting } = req.params;
-  //console.log(1,idSetting)
+  //console.log(1, idSetting);
   try {
     const settingsStudio = await settingStudio.getById(idSetting);
     res.json({
@@ -54,4 +60,5 @@ router.patch("/:idSetting", async (req, res, next) => {
     });
   }
 });
+
 module.exports = router;

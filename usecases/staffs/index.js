@@ -12,12 +12,21 @@ const create = async (userData) => {
   return savedStaff;
 };
 
-const get = async () => {
+const get = async (idstudio) => {
   const allUser = await User.find({})
     .populate("idRole", ["rol"])
     .where("idRole")
-    //.where("idRole")
     .equals("61bbef7361603fab47f01fcb");
+  //.equals("61a5c595cb1557cfd225dd8f");
+  return allUser;
+};
+
+const getByStudio = async (idstudio) => {
+  const allUser = await User.find({ idstudio })
+    .populate("idRole", ["rol"])
+    .where("idRole")
+    //  .equals("61bbef7361603fab47f01fcb");
+    .equals("61a5c595cb1557cfd225dd8f");
   return allUser;
 };
 
@@ -43,4 +52,4 @@ const remove = async (userId) => {
   //return user;
 };
 
-module.exports = { create, get, getById, remove, update };
+module.exports = { create, get, getById, remove, update, getByStudio };

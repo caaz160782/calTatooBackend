@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const studioTat = require("../usecases/Studio");
-const user = require("../usecases/admin");
+const admin = require("../usecases/admin");
 const { isAdmin } = require("../middlewares/authHandlers");
 const {
   idNull,
@@ -35,9 +35,12 @@ router.post(
   async (request, response, next) => {
     try {
       const studioData = request.body;
-      const { id_user } = request.body;
-      const studioCreated = await studioTat.create(studioData);
-      const upUsRegStudio = await user.update(id_user, (registerStudio = true));
+      const id_user = request.id;
+      const studioCreated = await studioTat.create(studioData, id_user);
+      const upUsRegStudio = await admin.updateRegStudio(
+        id_user,
+        (registerStudio = true)
+      );
       response.status(201).json({
         ok: true,
         message: "Created successfully",

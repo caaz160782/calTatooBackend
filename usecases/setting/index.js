@@ -26,6 +26,14 @@ const getById = async (idSetting) => {
   return setting;
 };
 
+const getByStudio = async (idStudio) => {
+  const settinStudi = await Setting.findOne({ id_tatoostudios: idStudio })
+    .populate("id_tatoostudios", ["name"])
+    .where("id_tatoostudios")
+    .equals(idStudio);
+  return settinStudi;
+};
+
 const update = async (settingId, settingData) => {
   const { logo, timeToOpen, timeToClose, dayAvailables, notifications } =
     settingData;
@@ -43,4 +51,4 @@ const update = async (settingId, settingData) => {
   ).exec();
 };
 
-module.exports = { create, getById, update };
+module.exports = { create, getById, getByStudio, update };

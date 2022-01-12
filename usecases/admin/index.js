@@ -15,7 +15,7 @@ const create = async (userData) => {
   return createdUser;
 };
 
-const updateRegister = async (userId, registerStudio) => {
+const updateRegStudio = async (userId, registerStudio) => {
   return User.findByIdAndUpdate(
     userId,
     {
@@ -25,7 +25,7 @@ const updateRegister = async (userId, registerStudio) => {
   ).exec();
 };
 
-const updateFinishConfig = async (userId, finishConfig) => {
+const updateFinConfig = async (userId, finishConfig) => {
   return User.findByIdAndUpdate(
     userId,
     {
@@ -35,4 +35,4 @@ const updateFinishConfig = async (userId, finishConfig) => {
   ).exec();
 };
 
-module.exports = { create, updateRegister, updateFinishConfig };
+module.exports = { create, updateRegStudio, updateFinConfig };

@@ -19,7 +19,7 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  dayAvailables: {
+  dayNotAvailables: {
     type: Array,
     required: false,
   },
@@ -27,13 +27,13 @@ const schema = new Schema({
     type: String,
     required: false,
   },
-  statusSetting:{
+  statusSetting: {
     type: Boolean,
     default: true,
   },
-  addedDate : { 
-    type: Date, 
-    default: Date.now 
+  addedDate: {
+    type: Date,
+    default: Date.now,
   },
 });
 module.exports = {

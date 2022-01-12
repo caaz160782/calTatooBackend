@@ -133,7 +133,7 @@ const defPhoneStudio = async (req, res, next) => {
 const defWhatsapp = async (req, res, next) => {
   const studioData = req.body;
   const { phoneWhatsApp } = studioData;
-  if (phoneWhatsApp.length === 12) {
+  if (phoneWhatsApp.length === 10) {
     next();
   } else if (phoneWhatsApp.length === 0) {
     return res.status(404).json({

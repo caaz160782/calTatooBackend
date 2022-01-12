@@ -8,6 +8,7 @@ const { isAdmin } = require("../middlewares/authHandlers");
 router.post("/", isAdmin, async (req, res, next) => {
   try {
     const settingData = req.body;
+
     const id_user = req.id;
     const settingCreated = await settingStudio.create(settingData);
     const upFinConfigStudio = await admin.updateFinConfig(

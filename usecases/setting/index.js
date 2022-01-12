@@ -6,7 +6,7 @@ const create = async (settingData) => {
     logo,
     timeToOpen,
     timeToClose,
-    dayAvailables,
+    dayNotAvailables,
     notifications,
   } = settingData;
   const settingStudio = new Setting({
@@ -14,7 +14,7 @@ const create = async (settingData) => {
     logo,
     timeToOpen,
     timeToClose,
-    dayAvailables,
+    dayNotAvailables,
     notifications,
   });
   const createdSettingStudio = await settingStudio.save();

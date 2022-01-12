@@ -19,7 +19,7 @@ router.post(
   "/",
   isAdmin,
   [check("email").custom(existEmail), validarCampos],
-  emailVerifiqued,
+  //emailVerifiqued,
   pswDefinition,
   defPhoneNumber,
   defphonePersonal,
@@ -30,13 +30,13 @@ router.post(
     try {
       let userData = request.body;
       const { Role } = request.body;
-      if (Role === "Tatoo") {
+      if (Role === "staffTatuador") {
         if (request.file.filename) {
           request.body.picture = request.file.filename;
         }
-        const rols = await rol.find("Tatuador");
+        const rols = await rol.find("tatuador");
         const { _id } = rols;
-        //userData = { ...userData, idRole: _id.toString() };
+        userData = { ...userData, idRole: _id.toString() };
         const userCreated = await user.create(userData);
         response.status(201).json({
           status: "ok",

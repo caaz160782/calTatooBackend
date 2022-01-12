@@ -1,7 +1,7 @@
-const Rol = require("../../models/sizes").model;
-//lista roles
+const Size = require("../../models/sizes").model;
+
 const get = async () => {
-  const sizes = await Rol.find({}).exec();
+  const sizes = await Size.find({}).exec();
   return sizes;
 };
 

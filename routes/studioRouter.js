@@ -35,9 +35,15 @@ router.post(
   async (request, response, next) => {
     try {
       const studioData = request.body;
+<<<<<<< HEAD
       const id_user = request.id;
       const studioCreated = await studioTat.create(studioData, id_user);
       const upUsRegStudio = await admin.updateRegStudio(
+=======
+      const { id_user } = request.body;
+      const studioCreated = await studioTat.create(studioData);
+      const upUsRegStudio = await user.updateRegister(
+>>>>>>> develop
         id_user,
         (registerStudio = true)
       );

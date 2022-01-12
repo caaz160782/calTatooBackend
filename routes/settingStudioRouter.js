@@ -2,7 +2,11 @@ const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const settingStudio = require("../usecases/setting");
+<<<<<<< HEAD
 const admin = require("../usecases/admin");
+=======
+const user = require("../usecases/admin");
+>>>>>>> develop
 const { isAdmin } = require("../middlewares/authHandlers");
 
 router.post("/", isAdmin, async (req, res, next) => {
@@ -10,7 +14,11 @@ router.post("/", isAdmin, async (req, res, next) => {
     const settingData = req.body;
     const id_user = req.id;
     const settingCreated = await settingStudio.create(settingData);
+<<<<<<< HEAD
     const upFinConfigStudio = await admin.updateFinConfig(
+=======
+    const upUsfinishConfig = await user.updateFinishConfig(
+>>>>>>> develop
       id_user,
       (finishConfig = true)
     );

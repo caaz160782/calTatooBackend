@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const rol = require("../usecases/sizes");
+const size = require("../usecases/sizes");
 
 router.get("/", async (request, response, next) => {
   try {
-    const size = await size.get();
+    const sizes = await size.get();
     response.json({
       ok: true,
       message: "Done",
-      payload: size,
+      payload: sizes,
     });
   } catch (error) {
     //next(error);
-    console.log(error)
+    console.log(error);
   }
 });
 

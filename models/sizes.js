@@ -7,11 +7,12 @@ const schema = new Schema({
     minlenght: 1,
     required: true,
   },
-  price: {
-    type: Number,
+  descripcion: {
+    type: String,
+    minlenght: 1,
     required: true,
   },
-  time: {
+  price: {
     type: Number,
     required: true,
   },

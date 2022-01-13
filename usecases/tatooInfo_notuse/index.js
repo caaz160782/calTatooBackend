@@ -1,4 +1,4 @@
-const InfoTattoo = require("../../models/tatooInfo").model;
+const InfoTattoo = require("../../models/tatooInfo_notuse").model;
 
 const get = async () => {
   const allDates = await InfoTattoo.find({}).exec();
@@ -50,9 +50,11 @@ const update = async (dateId, dateData) => {
     cost,
     estimated,
   } = dateData;
-  return InfoTattoo.findByIdAndUpdate( dateId, { description,desPhoto, idSize, tattooColor, tattooBN, cost, estimated },
+  return InfoTattoo.findByIdAndUpdate(
+    dateId,
+    { description, desPhoto, idSize, tattooColor, tattooBN, cost, estimated },
     { new: true }
   ).exec();
 };
 
-module.exports = { get, create, getById ,create,update};
+module.exports = { get, create, getById, create, update };

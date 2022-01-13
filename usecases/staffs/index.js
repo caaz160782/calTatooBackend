@@ -17,7 +17,6 @@ const get = async (idstudio) => {
     .populate("idRole", ["rol"])
     .where("idRole")
     .equals("61bbef7361603fab47f01fcb");
-  //.equals("61a5c595cb1557cfd225dd8f");
   return allUser;
 };
 
@@ -26,7 +25,6 @@ const getByStudio = async (idstudio) => {
     .populate("idRole", ["rol"])
     .where("idRole")
     .equals("61bbef7361603fab47f01fcb");
-
   return allUser;
 };
 

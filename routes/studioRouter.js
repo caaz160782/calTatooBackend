@@ -42,7 +42,7 @@ router.post(
         (registerStudio = true)
       );
       response.status(201).json({
-        ok: true,
+        code: true,
         message: "Created successfully",
         payload: studioCreated,
       });

@@ -17,22 +17,24 @@ const { subirArchivo } = require("../lib/subiendoArchivos");
 
 router.post(
   "/",
+  subirArchivo,
   isAdmin,
   [check("email").custom(existEmail), validarCampos],
-  //emailVerifiqued,
+  emailVerifiqued,
   pswDefinition,
   defPhoneNumber,
   defphonePersonal,
   defCurp,
   defRfc,
-  subirArchivo,
   async (request, response, next) => {
     try {
       let userData = request.body;
-      const { Role } = request.body;
+      const { Role, picture } = request.body;
       if (Role === "staffTatuador") {
-        if (request.file.filename) {
-          request.body.picture = request.file.filename;
+        if (picture !== "") {
+          if (request.file.filename) {
+            request.body.picture = request.file.filename;
+          }
         }
         const rols = await rol.find("tatuador");
         const { _id } = rols;
@@ -52,8 +54,8 @@ router.post(
   }
 );
 
-//router.get("/",isAdmin, async (request, response, next) => {
-router.get("/", async (request, response, next) => {
+router.get("/", isAdmin, async (request, response, next) => {
+  //router.get("/", async (request, response, next) => {
   try {
     const users = await user.get();
     response.json({

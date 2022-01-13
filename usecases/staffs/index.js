@@ -3,6 +3,7 @@ const hash = require("../../lib/crypt");
 
 const create = async (userData) => {
   const { password, ...rest } = userData;
+
   const passwordHash = await hash.hashPassword(password);
   const staff = new User({
     password: passwordHash,
@@ -48,8 +49,10 @@ const update = async (userId, userData) => {
   }
 };
 const remove = async (userId) => {
-  await User.findByIdAndDelete(userId).exec();
-  //return user;
+  const userBorrado = await User.findByIdAndUpdate(userId, {
+    statusUser: false,
+  }).exec();
+  return userBorrado;
 };
 
 module.exports = { create, get, getById, remove, update, getByStudio };

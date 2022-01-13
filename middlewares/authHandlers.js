@@ -1,5 +1,6 @@
 const jwt = require("../lib/jwt");
 const { validationResult } = require("express-validator");
+const User = require("../models/users").model;
 
 const validarCampos = (req, res, next) => {
   const error = validationResult(req);
@@ -11,7 +12,7 @@ const validarCampos = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
   const { apitoken } = req.headers;
-
+  console.log(apitoken);
   if (apitoken !== undefined) {
     try {
       const verify = jwt.verify(apitoken); //valida que el token se valido
@@ -85,6 +86,22 @@ const isMember = (req, res, next) => {
   }
 };
 
+const correoExiste = async (req, res, next) => {
+  const { email } = req.body;
+  console.log(req.body);
+  const emailExist = await User.findOne({ email });
+  if (emailExist) {
+    console.log("email existe");
+    res.status(404).json({
+      code: "CORREO_EXIST",
+      message: "correo ya existe",
+      error: "correo ya existe",
+    });
+  } else {
+    next();
+  }
+};
+
 const isClient = (req, res, next) => {
   const { apitoken } = req.headers;
   const verify = jwt.verify(apitoken);
@@ -99,4 +116,4 @@ const isClient = (req, res, next) => {
   }
 };
 
-module.exports = { isAdmin, validarCampos, isClient, isMember };
+module.exports = { isAdmin, validarCampos, isClient, isMember, correoExiste };

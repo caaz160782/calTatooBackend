@@ -23,6 +23,15 @@ router.post(
   "/",
   subirArchivo,
   isAdmin,
+<<<<<<< HEAD
+  [check("email").custom(existEmail), validarCampos],
+  emailVerifiqued,
+  pswDefinition,
+  defPhoneNumber,
+  defphonePersonal,
+  defCurp,
+  defRfc,
+=======
   correoExiste,
   // [check("email").custom(existEmail), validarCampos],
   //emailVerifiqued,
@@ -32,13 +41,16 @@ router.post(
   defCurp,
   defRfc,
 
+>>>>>>> develop
   async (request, response, next) => {
     try {
       let userData = request.body;
-      const { Role } = request.body;
+      const { Role, picture } = request.body;
       if (Role === "staffTatuador") {
-        if (request.file.filename) {
-          request.body.picture = request.file.filename;
+        if (picture !== "") {
+          if (request.file.filename) {
+            request.body.picture = request.file.filename;
+          }
         }
         const rols = await rol.find("tatuador");
         const { _id } = rols;
@@ -59,6 +71,10 @@ router.post(
 );
 
 router.get("/", isAdmin, async (request, response, next) => {
+<<<<<<< HEAD
+  //router.get("/", async (request, response, next) => {
+=======
+>>>>>>> develop
   try {
     const users = await user.get();
     response.json({

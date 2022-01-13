@@ -17,7 +17,7 @@ router.post("/", emailVerifiqued, async (req, res, next) => {
         infoStudio = { id: _id.toString(), name: name };
       }
       res.status(202).json({
-        auth: true,
+        autenticado: true,
         token: token,
         infoUser: infoUser,
         infoStudio,

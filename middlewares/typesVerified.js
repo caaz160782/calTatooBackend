@@ -131,6 +131,7 @@ const defRfc = async (req, res, next) => {
     return res.status(404).json({
       code: "RFC_WRONG",
       message: "rfc format is not correct",
+      error: "rfc format is not correct",
     });
   } else {
     next();

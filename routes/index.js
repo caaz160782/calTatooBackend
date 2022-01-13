@@ -4,6 +4,7 @@ const adminRouter = require("./adminRouter");
 const loginRouter = require("./loginRouter");
 const clientAdminRouter = require("./clientAdminRouter");
 const staffRouter = require("./staffRouter");
+const staffRouterInac = require("./staffRouterInac");
 const tattoInfoRouter = require("./tattooInfoRouter");
 const studioRouter = require("./studioRouter");
 const clientModifiedRouter = require("./clientModifiedRouter");
@@ -20,6 +21,7 @@ const apiRouter = (app) => {
   app.use("/login", loginRouter);
   app.use("/clientAdmin", clientAdminRouter);
   app.use("/staff", staffRouter);
+  app.use("/staffInac", staffRouterInac);
   app.use("/tatooInfo", tattoInfoRouter);
   app.use("/studio", studioRouter);
   app.use("/clientModified", clientModifiedRouter);

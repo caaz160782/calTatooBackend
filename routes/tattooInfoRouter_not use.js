@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const infoTatoo = require("../usecases/tatooInfo_notuse");
+const infoTatoo = require("../usecases/tatooInfo");
 
 //estos se mostrarian solo al administrador
 router.get("/", async (request, response, next) => {
@@ -53,34 +53,34 @@ router.post("/", async (req, res, next) => {
 });
 
 //modificar usuario
-router.patch("/:dateId", async (req, res, next) => {
-  const { dateId } = req.params;
-  //const   userId   =request.id;
-  const dateData = req.body;
-  // if(idUser === userId)
-  // {
-  try {
-    const dateUpdate = await infoTatoo.update(dateId, dateData);
-    res.status(201).json({
-      ok: true,
-      message: `Actualizado`,
-      dateUpdate,
-    });
-  } catch (error) {
-    next(error);
-    res.status(404).json({
-      status: false,
-      message: "User not found",
-    });
-  }
-  //   }
-  // else{
-  //   response.status(404).json({
-  //       ok:false,
-  //       message: "Unauthorized",
+// router.patch("/:dateId", async (req, res, next) => {
+//   const { dateId } = req.params;
+//   //const   userId   =request.id;
+//   const dateData = req.body;
+//   // if(idUser === userId)
+//   // {
+//   try {
+//     const dateUpdate = await infoTatoo.update(dateId, dateData);
+//     res.status(201).json({
+//       ok: true,
+//       message: `Actualizado`,
+//       dateUpdate,
+//     });
+//   } catch (error) {
+//     next(error);
+//     res.status(404).json({
+//       status: false,
+//       message: "User not found",
+//     });
+//   }
+//   //   }
+//   // else{
+//   //   response.status(404).json({
+//   //       ok:false,
+//   //       message: "Unauthorized",
 
-  //   })
-  // }
-});
+//   //   })
+//   // }
+// });
 
 module.exports = router;

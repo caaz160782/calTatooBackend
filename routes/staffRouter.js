@@ -23,16 +23,7 @@ router.post(
   "/",
   subirArchivo,
   isAdmin,
-<<<<<<< HEAD
-  [check("email").custom(existEmail), validarCampos],
-  emailVerifiqued,
-  pswDefinition,
-  defPhoneNumber,
-  defphonePersonal,
-  defCurp,
-  defRfc,
-=======
-  correoExiste,
+  //correoExiste,
   // [check("email").custom(existEmail), validarCampos],
   //emailVerifiqued,
   //pswDefinition,
@@ -41,7 +32,6 @@ router.post(
   defCurp,
   defRfc,
 
->>>>>>> develop
   async (request, response, next) => {
     try {
       let userData = request.body;
@@ -71,10 +61,7 @@ router.post(
 );
 
 router.get("/", isAdmin, async (request, response, next) => {
-<<<<<<< HEAD
   //router.get("/", async (request, response, next) => {
-=======
->>>>>>> develop
   try {
     const users = await user.get();
     response.json({

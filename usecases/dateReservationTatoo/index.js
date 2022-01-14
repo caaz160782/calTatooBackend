@@ -44,6 +44,10 @@ const getByIdStudio = async (idStudio) => {
   return dateByStudio;
 };
 
+const deleteDate = (postId) => {
+  return Post.findByIdAndDelete(postId).exec();
+};
+
 /*
 const getByStudio = async (idstudio) => {
   const allUser = await User.find({ idStudio: idstudio })
@@ -93,4 +97,4 @@ const update = async (studioId, studioData) => {
 };
 
 module.exports = { create, update, getById, get };*/
-module.exports = { create, getByIdStudio };
+module.exports = { create, getByIdStudio, deleteDate };

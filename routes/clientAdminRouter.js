@@ -1,13 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const client = require("../usecases/client");
-const {isAdmin,isMember, validarCampos} = require("../middlewares/authHandlers");
-const { verifiedAge, pswDefinition, defphonePersonal } = require("../middlewares/typesVerified");
+const {
+  isAdmin,
+  isMember,
+  validarCampos,
+} = require("../middlewares/authHandlers");
+const {
+  verifiedAge,
+  pswDefinition,
+  defphonePersonal,
+} = require("../middlewares/typesVerified");
 const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
+const rol = require("../usecases/rols");
 
 //cliente por id
-router.get("/:idClient", isMember,  async (request, response, next) => {
+router.get("/:idClient", isMember, async (request, response, next) => {
   const { idClient } = request.params;
   try {
     const clientId = await client.getById(idClient);
@@ -24,7 +33,7 @@ router.get("/:idClient", isMember,  async (request, response, next) => {
   }
 });
 //lista clientes
-router.get("/",isMember, async (request, response, next) => {
+router.get("/", isMember, async (request, response, next) => {
   try {
     const clients = await client.get();
     response.json({
@@ -45,19 +54,25 @@ router.post(
   pswDefinition,
   isMember,
   defphonePersonal,
-  [check("email").custom(existEmail), validarCampos],
-  [check("email", "el correo no es valido").isEmail(), validarCampos],
+  // [check("email").custom(existEmail), validarCampos],
+  //[check("email", "el correo no es valido").isEmail(), validarCampos],
   async (request, response, next) => {
     try {
-      const clientData = request.body;
-      const clientCreated = await client.create(clientData);
-      response.status(201).json({
-        status: true,
-        message: "New user created",
-        payload: {
-          clientCreated,
-        },
-      });
+      let clientData = request.body;
+      const { Role } = request.body;
+      if (Role === "Cliente") {
+        const rols = await rol.find("Cliente");
+        const { _id } = rols;
+        clientData = { ...clientData, idRole: _id.toString() };
+        const clientCreated = await client.create(clientData);
+        response.status(201).json({
+          status: true,
+          message: "New user created",
+          payload: {
+            clientCreated,
+          },
+        });
+      }
     } catch (error) {
       next(error);
     }
@@ -65,7 +80,7 @@ router.post(
 );
 
 router.patch("/:idClient", isMember, async (request, response, next) => {
-  const {idClient} = request.params;
+  const { idClient } = request.params;
   const clientData = request.body;
   const clientId = clientData._id;
 

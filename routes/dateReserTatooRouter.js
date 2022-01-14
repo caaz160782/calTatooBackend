@@ -18,6 +18,7 @@ router.post("/", async (req, res, next) => {
 
 router.get("/:idStudio", async (request, response, next) => {
   const { idStudio } = request.params;
+  //console.log(idStudio);
   try {
     const dates = await dateReservation.getByIdStudio(idStudio);
     response.json({
@@ -30,6 +31,26 @@ router.get("/:idStudio", async (request, response, next) => {
     response.status(404).json({
       code: false,
       message: "Dates not found",
+    });
+  }
+});
+
+router.delete("/:idDate", (request, response, next) => {
+  try {
+    const { idDate } = request.params;
+    const resDelete = dateReservation.delete(idDate);
+    response.status(202).json({
+      ok: true,
+      res: resDelete,
+      message: `Deleted  successfully`,
+    });
+  } catch (error) {
+    next(error);
+    response.status(404).json({
+      code: false,
+      res: resDelete,
+      message: "Can't delete",
+      error: "error",
     });
   }
 });

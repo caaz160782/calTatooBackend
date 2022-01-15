@@ -12,7 +12,7 @@ const validarCampos = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
   const { apitoken } = req.headers;
-  console.log(apitoken);
+  console.log("apitoken", apitoken);
   if (apitoken !== undefined) {
     try {
       const verify = jwt.verify(apitoken); //valida que el token se valido

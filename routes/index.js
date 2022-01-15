@@ -5,7 +5,6 @@ const loginRouter = require("./loginRouter");
 const clientAdminRouter = require("./clientAdminRouter");
 const staffRouter = require("./staffRouter");
 const staffRouterInac = require("./staffRouterInac");
-const tattoInfoRouter = require("./tattooInfoRouter");
 const studioRouter = require("./studioRouter");
 const clientModifiedRouter = require("./clientModifiedRouter");
 const ubicacionRouter = require("./ubicacionRouter");
@@ -13,7 +12,11 @@ const settingStudioRouter = require("./settingStudioRouter");
 const catRemClientRouter = require("./caRememberRouter");
 const findByStudioSettingRouter = require("./findBySettingStudioRouter");
 const findByStudioStaffRouter = require("./staffByStudioRouter");
+<<<<<<< HEAD
 const findByStudioClientfRouter = require("./clientByStudioRouter");
+=======
+const dateTatoo = require("./dateReserTatooRouter");
+>>>>>>> develop
 
 const apiRouter = (app) => {
   app.use("/rols", rolRouter);
@@ -23,7 +26,6 @@ const apiRouter = (app) => {
   app.use("/clientAdmin", clientAdminRouter);
   app.use("/staff", staffRouter);
   app.use("/staffInac", staffRouterInac);
-  app.use("/tatooInfo", tattoInfoRouter);
   app.use("/studio", studioRouter);
   app.use("/clientModified", clientModifiedRouter);
   app.use("/localidad", ubicacionRouter);
@@ -32,5 +34,6 @@ const apiRouter = (app) => {
   app.use("/findStudiSetting", findByStudioSettingRouter);
   app.use("/findStaffByStudy", findByStudioStaffRouter);
   app.use("/findClientByStudy", findByStudioClientfRouter);
+  app.use("/dateTatoo", dateTatoo);
 };
 module.exports = apiRouter;

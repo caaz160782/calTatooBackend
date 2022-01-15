@@ -13,10 +13,10 @@ const {
 } = require("../middlewares/typesVerified");
 const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
-const { subirArchivo } = require("../lib/subiendoArchivos");
+const rol = require("../usecases/rols");
+
 //cliente por id
 router.get("/:idClient", isMember, async (request, response, next) => {
-  const { idClient } = request.params;
   try {
     const clientId = await client.getById(idClient);
     response.json({
@@ -49,33 +49,29 @@ router.get("/", isMember, async (request, response, next) => {
 //crea a los clientes
 router.post(
   "/",
-  subirArchivo,
-  // verifiedAge,
-  // pswDefinition,
-  // isMember,
-  // defphonePersonal,
+  verifiedAge,
+  pswDefinition,
+  isMember,
+  defphonePersonal,
   // [check("email").custom(existEmail), validarCampos],
-  // [check("email", "el correo no es valido").isEmail(), validarCampos],
+  //[check("email", "el correo no es valido").isEmail(), validarCampos],
   async (request, response, next) => {
     try {
-      const clientData = request.body;
-      const { Role } = clientData;
-      if (Role === "cliente") {
-        if (request.file.filename) {
-          request.body.picture = request.file.filename;
-        }
+      let clientData = request.body;
+      const { Role } = request.body;
+      if (Role === "Cliente") {
+        const rols = await rol.find("Cliente");
+        const { _id } = rols;
+        clientData = { ...clientData, idRole: _id.toString() };
+        const clientCreated = await client.create(clientData);
+        response.status(201).json({
+          status: true,
+          message: "New user created",
+          payload: {
+            clientCreated,
+          },
+        });
       }
-      const rols = await rol.find("tatuador");
-      const { _id } = rols;
-      userData = { ...userData, idRole: _id.toString() };
-      const clientCreated = await client.create(clientData);
-      response.status(201).json({
-        status: true,
-        message: "New user created",
-        payload: {
-          clientCreated,
-        },
-      });
     } catch (error) {
       next(error);
     }

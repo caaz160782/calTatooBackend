@@ -1,15 +1,15 @@
 const { response } = require("express");
 const express = require("express");
 const router = express.Router();
-const staff = require("../usecases/staffs");
+const client = require("../usecases/client");
 const { isAdmin } = require("../middlewares/authHandlers");
 
-//router.get("/:idStudio",isAdmin, async (req, res, next) => {
 router.get("/:idStudio", async (req, res, next) => {
   const { idStudio } = req.params;
-  //console.log(idStudio);
+  console.log(idStudio);
   try {
-    const settingsStudio = await staff.getByStudio(idStudio);
+    const settingsStudio = await client.getByStudio(idStudio);
+    console.log("resultado", settingsStudio);
     res.json({
       message: "Done",
       payload: settingsStudio,

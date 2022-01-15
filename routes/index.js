@@ -13,6 +13,7 @@ const settingStudioRouter = require("./settingStudioRouter");
 const catRemClientRouter = require("./caRememberRouter");
 const findByStudioSettingRouter = require("./findBySettingStudioRouter");
 const findByStudioStaffRouter = require("./staffByStudioRouter");
+const findByStudioClientfRouter = require("./clientByStudioRouter");
 
 const apiRouter = (app) => {
   app.use("/rols", rolRouter);
@@ -30,5 +31,6 @@ const apiRouter = (app) => {
   app.use("/clientRemember", catRemClientRouter);
   app.use("/findStudiSetting", findByStudioSettingRouter);
   app.use("/findStaffByStudy", findByStudioStaffRouter);
+  app.use("/findClientByStudy", findByStudioClientfRouter);
 };
 module.exports = apiRouter;

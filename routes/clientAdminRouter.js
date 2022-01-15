@@ -1,13 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const client = require("../usecases/client");
-const {isAdmin,isMember, validarCampos} = require("../middlewares/authHandlers");
-const { verifiedAge, pswDefinition, defphonePersonal } = require("../middlewares/typesVerified");
+const {
+  isAdmin,
+  isMember,
+  validarCampos,
+} = require("../middlewares/authHandlers");
+const {
+  verifiedAge,
+  pswDefinition,
+  defphonePersonal,
+} = require("../middlewares/typesVerified");
 const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
-
+const { subirArchivo } = require("../lib/subiendoArchivos");
 //cliente por id
-router.get("/:idClient", isMember,  async (request, response, next) => {
+router.get("/:idClient", isMember, async (request, response, next) => {
   const { idClient } = request.params;
   try {
     const clientId = await client.getById(idClient);
@@ -24,7 +32,7 @@ router.get("/:idClient", isMember,  async (request, response, next) => {
   }
 });
 //lista clientes
-router.get("/",isMember, async (request, response, next) => {
+router.get("/", isMember, async (request, response, next) => {
   try {
     const clients = await client.get();
     response.json({
@@ -41,15 +49,25 @@ router.get("/",isMember, async (request, response, next) => {
 //crea a los clientes
 router.post(
   "/",
-  verifiedAge,
-  pswDefinition,
-  isMember,
-  defphonePersonal,
-  [check("email").custom(existEmail), validarCampos],
-  [check("email", "el correo no es valido").isEmail(), validarCampos],
+  subirArchivo,
+  // verifiedAge,
+  // pswDefinition,
+  // isMember,
+  // defphonePersonal,
+  // [check("email").custom(existEmail), validarCampos],
+  // [check("email", "el correo no es valido").isEmail(), validarCampos],
   async (request, response, next) => {
     try {
       const clientData = request.body;
+      const { Role } = clientData;
+      if (Role === "cliente") {
+        if (request.file.filename) {
+          request.body.picture = request.file.filename;
+        }
+      }
+      const rols = await rol.find("tatuador");
+      const { _id } = rols;
+      userData = { ...userData, idRole: _id.toString() };
       const clientCreated = await client.create(clientData);
       response.status(201).json({
         status: true,
@@ -65,7 +83,7 @@ router.post(
 );
 
 router.patch("/:idClient", isMember, async (request, response, next) => {
-  const {idClient} = request.params;
+  const { idClient } = request.params;
   const clientData = request.body;
   const clientId = clientData._id;
 

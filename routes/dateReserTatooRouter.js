@@ -21,7 +21,7 @@ router.get("/:idStudio", async (request, response, next) => {
   //console.log(idStudio);
   try {
     const dates = await dateReservation.getByIdStudio(idStudio);
-    response.json({
+    response.status(201).json({
       code: true,
       message: "Done",
       payload: { dates },
@@ -38,7 +38,7 @@ router.get("/:idStudio", async (request, response, next) => {
 router.delete("/:idDate", (request, response, next) => {
   try {
     const { idDate } = request.params;
-    const resDelete = dateReservation.delete(idDate);
+    const resDelete = dateReservation.deleteDate(idDate);
     response.status(202).json({
       ok: true,
       res: resDelete,

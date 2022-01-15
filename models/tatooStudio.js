@@ -21,7 +21,7 @@ const schema = new Schema({
     minLength: 1,
     required: true,
   },
-  licenseImage: {
+  picture: {
     type: String,
     trim: true,
   },

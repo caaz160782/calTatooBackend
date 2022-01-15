@@ -44,8 +44,8 @@ const getByIdStudio = async (idStudio) => {
   return dateByStudio;
 };
 
-const deleteDate = (postId) => {
-  return Post.findByIdAndDelete(postId).exec();
+const deleteDate = (idDate) => {
+  return DateTatoo.findByIdAndDelete(idDate).exec();
 };
 
 /*
@@ -95,6 +95,5 @@ const update = async (studioId, studioData) => {
     )
     .exec();
 };
-
 module.exports = { create, update, getById, get };*/
 module.exports = { create, getByIdStudio, deleteDate };

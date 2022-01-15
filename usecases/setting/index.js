@@ -35,16 +35,15 @@ const getByStudio = async (idStudio) => {
 };
 
 const update = async (settingId, settingData) => {
-  const { logo, timeToOpen, timeToClose, dayAvailables, notifications } =
+  const { logo, timeToOpen, timeToClose, dayNotAvailables, notifications } =
     settingData;
-
   return Setting.findByIdAndUpdate(
     settingId,
     {
       logo,
       timeToOpen,
       timeToClose,
-      dayAvailables,
+      dayNotAvailables,
       notifications,
     },
     { new: true }

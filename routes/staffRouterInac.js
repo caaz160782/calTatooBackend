@@ -25,7 +25,7 @@ router.patch("/:idUser", isAdmin, async (req, response, next) => {
 
     response.status(201).json({
       ok: true,
-      message: `Actualizado`,
+      message: `reactivado`,
       userReactivado,
     });
   } catch (error) {

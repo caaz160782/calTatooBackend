@@ -3,7 +3,7 @@ const hash = require("../../lib/crypt");
 
 const create = async (userData) => {
   const { password, ...rest } = userData;
-
+  console.log("userData", userData);
   const passwordHash = await hash.hashPassword(password);
   const staff = new User({
     password: passwordHash,

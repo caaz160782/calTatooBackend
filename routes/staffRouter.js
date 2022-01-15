@@ -22,15 +22,14 @@ const { subirArchivo } = require("../lib/subiendoArchivos");
 router.post(
   "/",
   subirArchivo,
-  isAdmin,
+  //isAdmin,
   correoExiste,
-  // [check("email").custom(existEmail), validarCampos],
   //emailVerifiqued,
   //pswDefinition,
   // defPhoneNumber,
   //defphonePersonal,
-  defCurp,
-  defRfc,
+  //defCurp,
+  //defRfc,
 
   async (request, response, next) => {
     try {
@@ -53,7 +52,12 @@ router.post(
         });
       }
     } catch (error) {
-      next(error);
+      //  next(error);
+      response.status(404).json({
+        status: "wrong",
+        message: "sttaf not created",
+        error: "tatuador not created",
+      });
     }
   }
 );
@@ -91,13 +95,12 @@ router.get("/:idUser", isAdmin, async (request, response, next) => {
 });
 
 router.delete("/:idUser", isAdmin, (request, response, next) => {
-  console.log("removin");
   try {
     const { idUser } = request.params;
     const userId = user.remove(idUser);
     response.status(202).json({
       ok: true,
-      message: `Deleted  ${idUser} successfully`,
+      message: `Deleted successfully`,
     });
   } catch (error) {
     next(error);

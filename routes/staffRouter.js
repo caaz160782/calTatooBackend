@@ -33,6 +33,7 @@ router.post(
   defRfc,
 
   async (request, response, next) => {
+    console.log(request.body);
     try {
       let userData = request.body;
       const { Role, picture } = request.body;

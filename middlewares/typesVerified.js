@@ -47,7 +47,7 @@ const pswDefinition = async (req, res, next) => {
   if (password.match(regex) === null) {
     return res.status(404).json({
       code: "WRONG_PASSWORD",
-      error: "password incorrect format",
+      error: "password no valido",
       message:
         "password must be a minimum of 8 characters including a number, Upper, Lower And one special character",
     });
@@ -88,6 +88,7 @@ const defPhoneNumber = async (req, res, next) => {
     return res.status(404).json({
       code: "FORMAT_HOMEPHONE_WRONG",
       message: "the Home Phone It's not valid",
+      error: "numero de telefono  invalido",
     });
   }
 };
@@ -101,6 +102,7 @@ const defphonePersonal = async (req, res, next) => {
     return res.status(404).json({
       code: "FORMAT_CELPHONE_WRONG",
       message: "the Celphone  It's not valid",
+      error: "numero de telefono personal invalido",
     });
   }
 };
@@ -114,7 +116,8 @@ const defCurp = async (req, res, next) => {
   if (curp.match(regex) === null) {
     return res.status(404).json({
       code: "CURP_WRONG",
-      error: "curp format is not correct",
+      message: "el formato del curp es incorrecto",
+      error: "el formato del curp es incorrecto",
     });
   } else {
     next();
@@ -130,8 +133,8 @@ const defRfc = async (req, res, next) => {
   if (rfc.match(regex) === null) {
     return res.status(404).json({
       code: "RFC_WRONG",
-      message: "rfc format is not correct",
-      error: "rfc format is not correct",
+      message: "el formato del rfc es incorrecto",
+      error: "el formato del rfc es incorrecto",
     });
   } else {
     next();
@@ -146,6 +149,7 @@ const verifiedAge = async (req, res, next) => {
   } else {
     return res.status(404).json({
       message: "No eres mayor de edad",
+      error: "No eres mayor de edad",
       code: "AGE_WRONG",
     });
   }

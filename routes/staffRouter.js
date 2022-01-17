@@ -23,14 +23,14 @@ router.post(
   "/",
   subirArchivo,
   isAdmin,
-  //correoExiste,
+  correoExiste,
   // [check("email").custom(existEmail), validarCampos],
   //emailVerifiqued,
-  //pswDefinition,
-  // defPhoneNumber,
-  //defphonePersonal,
-  //defCurp,
-  //defRfc,
+  pswDefinition,
+  defPhoneNumber,
+  defphonePersonal,
+  defCurp,
+  defRfc,
 
   async (request, response, next) => {
     console.log(request.body);
@@ -60,7 +60,7 @@ router.post(
       response.status(404).json({
         status: "wrong",
         message: "sttaf not created",
-        error: "tatuador not created",
+        error: "tatuador no creado",
       });
     }
   }
@@ -82,8 +82,10 @@ router.get("/", isAdmin, async (request, response, next) => {
   }
 });
 
-router.get("/:idUser", isAdmin, async (request, response, next) => {
+//router.get("/:idUser", isAdmin, async (request, response, next) => {
+router.get("/:idUser", async (request, response, next) => {
   const { idUser } = request.params;
+  console.log(idUser);
   try {
     const userFound = await user.getById(idUser);
     response.json({
@@ -116,13 +118,17 @@ router.patch(
   "/:idUser",
   subirArchivo,
   isAdmin,
+  defCurp,
+  defRfc,
   async (request, response, next) => {
     const { idUser } = request.params;
     const userData = request.body;
-    console.log(userData);
+    const { picture } = userData;
     try {
-      if (request.file.filename) {
-        request.body.picture = request.file.filename;
+      if (picture !== "") {
+        if (request.file.filename) {
+          request.body.picture = request.file.filename;
+        }
       }
       const userUpdate = await user.update(idUser, userData);
       response.status(201).json({

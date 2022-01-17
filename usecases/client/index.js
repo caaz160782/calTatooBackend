@@ -13,78 +13,52 @@ const get = async () => {
 
 //ver los detalles de cliente  id
 const getById = async (clientId) => {
-  const client = await Client.findById(clientId)
-    .populate("idRole", ["rol"])
-    .where("idRole")
-    .equals("61bbeeca3143f1d4146eec10")
-    .exec();
+  const client = await Client.findById(clientId);
+
+  // .populate("idRole", ["rol"])
+  // .where("idRole")
+  // .equals("61bbeeca3143f1d4146eec10")
+  // .exec();
   return client;
 };
 //crear cliente
 const create = async (clientData) => {
-  const {
-    name,
-    lastName,
-    email,
-    phonePersonal,
-    age,
-    idRole,
-    password,
-    socialNetwork,
-    picture,
-  } = clientData;
-  const pswHash = await hash.hashPassword(password);
+  const { password, ...rest } = clientData;
+  // console.log("userData", clientData);
+  const passwordHash = await hash.hashPassword(password);
   const client = new Client({
-    name,
-    lastName,
-    email,
-    phonePersonal,
-    age,
-    password: pswHash,
-    idRole,
-    socialNetwork,
-    picture,
+    password: passwordHash,
+    ...rest,
   });
   const savedClient = await client.save();
   return savedClient;
 };
 //eliminar
-const del = (clientId) => {
-  return Client.findByIdAndDelete(clientId).exec();
+const remove = async (clientId) => {
+  //console.log(clientId);
+  const clientBorrado = await Client.findByIdAndUpdate(clientId, {
+    statusUser: false,
+  }).exec();
+  return clientBorrado;
 };
 //modificar
 const update = async (clientId, clientData) => {
-  const {
-    name,
-    lastName,
-    email,
-    phonePersonal,
-    age,
-    idRole,
-    password,
-    socialNetwork,
-    picture,
-  } = clientData;
-  return Client.findByIdAndUpdate(
-    clientId,
-    {
-      name,
-      lastName,
-      email,
-      phonePersonal,
-      age,
-      idRole,
-      password,
-      socialNetwork,
-      picture,
-    },
-    { new: true }
-  ).exec();
+  const { password, ...rest } = clientData;
+  console.log("client", clientData);
+  if (password) {
+    const passwordHash = await hash.hashPassword(password);
+    return Client.findByIdAndUpdate(clientId, {
+      ...rest,
+      password: passwordHash,
+    }).exec();
+  } else {
+    return Client.findByIdAndUpdate(clientId, { ...rest }).exec();
+  }
 };
 const getByStudio = async (idstudio) => {
-  console.log("all", idstudio);
+  // console.log("all", idstudio);
 
-  const allUser = await User.find({ idStudio: idstudio })
+  const allUser = await Client.find({ idStudio: idstudio })
     .populate("idRole", ["rol"])
     .where("idRole")
     .equals("61bbeeca3143f1d4146eec10");
@@ -92,4 +66,4 @@ const getByStudio = async (idstudio) => {
   return allUser;
 };
 
-module.exports = { get, getById, create, del, update, getByStudio };
+module.exports = { get, getById, create, remove, update, getByStudio };

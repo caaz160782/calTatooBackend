@@ -6,10 +6,10 @@ const { isAdmin } = require("../middlewares/authHandlers");
 
 router.get("/:idStudio", async (req, res, next) => {
   const { idStudio } = req.params;
-  console.log(idStudio);
+  // console.log("id estudio client", idStudio);
   try {
     const settingsStudio = await client.getByStudio(idStudio);
-    console.log("resultado", settingsStudio);
+    //console.log("resultado", settingsStudio);
     res.json({
       message: "Done",
       payload: settingsStudio,

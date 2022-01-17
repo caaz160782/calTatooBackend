@@ -7,7 +7,7 @@ const { isAdmin } = require("../middlewares/authHandlers");
 //router.get("/:idStudio",isAdmin, async (req, res, next) => {
 router.get("/:idStudio", async (req, res, next) => {
   const { idStudio } = req.params;
-  //console.log(idStudio);
+  // console.log("id studio", idStudio);
   try {
     const settingsStudio = await staff.getByStudio(idStudio);
     res.json({

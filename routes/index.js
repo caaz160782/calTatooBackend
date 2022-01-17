@@ -12,11 +12,8 @@ const settingStudioRouter = require("./settingStudioRouter");
 const catRemClientRouter = require("./caRememberRouter");
 const findByStudioSettingRouter = require("./findBySettingStudioRouter");
 const findByStudioStaffRouter = require("./staffByStudioRouter");
-<<<<<<< HEAD
 const findByStudioClientfRouter = require("./clientByStudioRouter");
-=======
 const dateTatoo = require("./dateReserTatooRouter");
->>>>>>> develop
 
 const apiRouter = (app) => {
   app.use("/rols", rolRouter);

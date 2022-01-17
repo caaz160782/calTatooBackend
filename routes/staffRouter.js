@@ -15,23 +15,19 @@ const {
   validarCampos,
   correoExiste,
 } = require("../middlewares/authHandlers");
-const { check } = require("express-validator");
-const { existEmail } = require("../usecases/verifica.js");
 const { subirArchivo } = require("../lib/subiendoArchivos");
 
 router.post(
   "/",
   subirArchivo,
   isAdmin,
-  //correoExiste,
-  // [check("email").custom(existEmail), validarCampos],
-  //emailVerifiqued,
-  //pswDefinition,
-  // defPhoneNumber,
-  //defphonePersonal,
+  correoExiste,
+  emailVerifiqued,
+  pswDefinition,
+  defPhoneNumber,
+  defphonePersonal,
   defCurp,
   defRfc,
-
   async (request, response, next) => {
     console.log(request.body);
     try {
@@ -57,6 +53,11 @@ router.post(
       }
     } catch (error) {
       next(error);
+      response.status(400).json({
+        status: "ok",
+        message: error,
+        code: "no it's possible create the user",
+      });
     }
   }
 );

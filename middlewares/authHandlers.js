@@ -24,6 +24,7 @@ const isAdmin = (req, res, next) => {
         res.status(403).json({
           code: "Unauthorized",
           message: "Unauthorized",
+          error: "Unauthorized",
         });
       }
     } catch (error) {
@@ -32,11 +33,13 @@ const isAdmin = (req, res, next) => {
         res.status(401).json({
           code: "TokenExpiredError",
           message: "timeExpired",
+          error: "timeExpired",
         });
       } else if (name === "JsonWebTokenError") {
         res.status(403).json({
-          ok: false,
+          code: "TokenExpiredError",
           message: "Unauthorized",
+          code: "JsonWebTokenError",
         });
       }
     }
@@ -44,6 +47,7 @@ const isAdmin = (req, res, next) => {
     res.status(403).json({
       code: "TokenNotExist",
       message: "Unauthorized",
+      error: "TokenNotExist",
     });
   }
 };

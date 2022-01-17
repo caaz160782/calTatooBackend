@@ -4,11 +4,16 @@ const router = express.Router();
 const settingStudio = require("../usecases/setting");
 const admin = require("../usecases/admin");
 const { isAdmin } = require("../middlewares/authHandlers");
+const { subirArchivo } = require("../lib/subiendoArchivos");
 
-router.post("/", isAdmin, async (req, res, next) => {
+router.post("/", subirArchivo, isAdmin, async (req, res, next) => {
   try {
-    const settingData = req.body;
-
+    let settingData = req.body;
+    if (req.body.picture !== "") {
+      if (req.file.filename) {
+        settingData = { ...settingData, logo: req.file.filename };
+      }
+    }
     const id_user = req.id;
     const settingCreated = await settingStudio.create(settingData);
     const upFinConfigStudio = await admin.updateFinConfig(
@@ -23,16 +28,21 @@ router.post("/", isAdmin, async (req, res, next) => {
       },
     });
   } catch (error) {
+    res.status(400).json({
+      code: "Unable to create setting",
+      status: "false",
+      message: error,
+    });
     next(error);
   }
 });
 
 router.get("/:idSetting", isAdmin, async (req, res, next) => {
   const { idSetting } = req.params;
-  //console.log(1, idSetting);
   try {
-    const settingsStudio = await settingStudio.getById(idSetting);
+    const settingsStudio = await settingStudio.getByStudio(idSetting);
     res.json({
+      code: "Done",
       message: "Done",
       payload: settingsStudio,
     });
@@ -40,16 +50,23 @@ router.get("/:idSetting", isAdmin, async (req, res, next) => {
     res.status(404).json({
       code: "NOT FOUND SETTING",
       message: "Setting not found",
+      error: error,
     });
   }
 });
 
-router.patch("/:idSetting", async (req, res, next) => {
+router.patch("/:idSetting", subirArchivo, isAdmin, async (req, res, next) => {
   const { idSetting } = req.params;
-  const settingData = req.body;
+  let settingData = req.body;
+  if (req.body.picture !== "") {
+    if (req.file.filename) {
+      settingData = { ...settingData, logo: req.file.filename };
+    }
+  }
   try {
     const settingUpdate = await settingStudio.update(idSetting, settingData);
     res.status(201).json({
+      status: "true",
       message: "Updated",
       payload: settingUpdate,
     });
@@ -58,6 +75,7 @@ router.patch("/:idSetting", async (req, res, next) => {
     res.status(404).json({
       status: false,
       message: "studio not found",
+      error: error,
     });
   }
 });

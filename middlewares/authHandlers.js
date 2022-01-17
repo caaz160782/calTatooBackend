@@ -37,7 +37,7 @@ const isAdmin = (req, res, next) => {
         });
       } else if (name === "JsonWebTokenError") {
         res.status(403).json({
-          ok: false,
+          code: "TokenExpiredError",
           message: "Unauthorized",
           error: "no esta autorizado",
         });

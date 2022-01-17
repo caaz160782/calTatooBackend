@@ -38,11 +38,17 @@ router.post(
         });
       } else {
         res.status(400).json({
+          code: "Unable to create user",
           status: "false",
           message: "Unable to create user",
         });
       }
     } catch (error) {
+      res.status(400).json({
+        code: "Unable to create user",
+        status: "false",
+        message: "error",
+      });
       next(error);
     }
   }

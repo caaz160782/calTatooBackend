@@ -66,7 +66,7 @@ router.patch("/:idSetting", subirArchivo, isAdmin, async (req, res, next) => {
   try {
     const settingUpdate = await settingStudio.update(idSetting, settingData);
     res.status(201).json({
-      status: "true",
+      status: true,
       message: "Updated",
       payload: settingUpdate,
     });

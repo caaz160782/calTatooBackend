@@ -5,7 +5,7 @@ const create = async (studioData, id_user) => {
   const {
     name,
     description,
-    licenseImage,
+    picture,
     postalCode,
     municipality,
     state,
@@ -20,7 +20,7 @@ const create = async (studioData, id_user) => {
     id_user,
     name,
     description,
-    licenseImage,
+    picture,
     postalCode,
     municipality,
     state,
@@ -50,7 +50,7 @@ const update = async (studioId, studioData) => {
   const {
     name,
     description,
-    licenseImage,
+    picture,
     postalCode,
     phoneWhatsApp,
     phoneStudio,
@@ -64,7 +64,7 @@ const update = async (studioId, studioData) => {
       {
         name,
         description,
-        licenseImage,
+        picture,
         postalCode,
         phoneWhatsApp,
         phoneStudio,

@@ -22,13 +22,14 @@ router.post(
   subirArchivo,
   isAdmin,
   correoExiste,
-  emailVerifiqued,
+  //emailVerifiqued,
   pswDefinition,
   defPhoneNumber,
   defphonePersonal,
   defCurp,
   defRfc,
   async (request, response, next) => {
+    console.log(request.body);
     try {
       let userData = request.body;
       const { Role, picture } = request.body;
@@ -51,11 +52,11 @@ router.post(
         });
       }
     } catch (error) {
-      next(error);
-      response.status(400).json({
-        status: "ok",
-        message: error,
-        code: "no it's possible create the user",
+      //  next(error);
+      response.status(404).json({
+        status: "wrong",
+        message: "sttaf not created",
+        error: "tatuador no creado",
       });
     }
   }
@@ -77,8 +78,10 @@ router.get("/", isAdmin, async (request, response, next) => {
   }
 });
 
-router.get("/:idUser", isAdmin, async (request, response, next) => {
+//router.get("/:idUser", isAdmin, async (request, response, next) => {
+router.get("/:idUser", async (request, response, next) => {
   const { idUser } = request.params;
+  console.log(idUser);
   try {
     const userFound = await user.getById(idUser);
     response.json({
@@ -95,13 +98,12 @@ router.get("/:idUser", isAdmin, async (request, response, next) => {
 });
 
 router.delete("/:idUser", isAdmin, (request, response, next) => {
-  console.log("removin");
   try {
     const { idUser } = request.params;
     const userId = user.remove(idUser);
     response.status(202).json({
       ok: true,
-      message: `Deleted  ${idUser} successfully`,
+      message: `Deleted successfully`,
     });
   } catch (error) {
     next(error);
@@ -112,13 +114,17 @@ router.patch(
   "/:idUser",
   subirArchivo,
   isAdmin,
+  defCurp,
+  defRfc,
   async (request, response, next) => {
     const { idUser } = request.params;
     const userData = request.body;
-    console.log(userData);
+    const { picture } = userData;
     try {
-      if (request.file.filename) {
-        request.body.picture = request.file.filename;
+      if (picture !== "") {
+        if (request.file.filename) {
+          request.body.picture = request.file.filename;
+        }
       }
       const userUpdate = await user.update(idUser, userData);
       response.status(201).json({

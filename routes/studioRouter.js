@@ -100,7 +100,6 @@ router.patch(
   defWhatsapp,
   defRfc,
   async (req, res, next) => {
-    console.log(2);
     try {
       let studioData = req.body;
       if (req.body.picture !== "") {

@@ -3,7 +3,6 @@ const DateTatoo = require("../../models/dateTatooInfo").model;
 const create = async (agendaTatooData) => {
   const {
     id_studio,
-    id_staff,
     id_tatuador,
     id_cliente,
     id_size,
@@ -12,15 +11,13 @@ const create = async (agendaTatooData) => {
     addDate,
     title,
     description,
-    desPhoto,
+    desPhotoTatoo,
     tipoTatoo,
     cost,
     estimated,
-    adelanto,
   } = agendaTatooData;
   const agendaTatoo = new DateTatoo({
     id_studio,
-    id_staff,
     id_tatuador,
     id_cliente,
     id_size,
@@ -29,14 +26,18 @@ const create = async (agendaTatooData) => {
     title,
     addDate,
     description,
-    desPhoto,
+    desPhotoTatoo,
     tipoTatoo,
     cost,
     estimated,
-    adelanto,
   });
   const saveDate = await agendaTatoo.save();
   return saveDate;
+};
+
+const getById = async (idStudio) => {
+  const studio = await DateTatoo.findById(idStudio).exec();
+  return studio;
 };
 
 const getByIdStudio = async (idStudio) => {
@@ -48,52 +49,25 @@ const deleteDate = (idDate) => {
   return DateTatoo.findByIdAndDelete(idDate).exec();
 };
 
-/*
-const getByStudio = async (idstudio) => {
-  const allUser = await User.find({ idStudio: idstudio })
-    .populate("idRole", ["rol"])
-    .where("idRole")
-    .equals("61bbef7361603fab47f01fcb");
-  return allUser;
-};
-const getByIdStudioVyTatuador = async (idStudio) => {
-  const studioByIdUser = await tatooStudio.findOne({ id_user: idUser }).exec();
-  return studioByIdUser;
-};
-const getById = async (idStudio) => {
-  const studio = await tatooStudio.findById(idStudio).exec();
-  return studio;
-};
-
 // Modificar info de estudios
-const update = async (studioId, studioData) => {
+const update = async (idDate, dateTatooData) => {
   const {
-    name,
+    start,
+    //end,
     description,
-    licenseImage,
-    postalCode,
-    phoneWhatsApp,
-    phoneStudio,
-    rfc,
-    social,
-  } = studioData;
-
-  return tatooStudio
-    .findByIdAndUpdate(
-      studioId,
-      {
-        name,
-        description,
-        licenseImage,
-        postalCode,
-        phoneWhatsApp,
-        phoneStudio,
-        rfc,
-        social,
-      },
-      { new: true }
-    )
-    .exec();
+    motivo,
+  } = dateTatooData;
+  console.log(dateTatooData);
+  return DateTatoo.findByIdAndUpdate(
+    idDate,
+    {
+      start,
+      //end,
+      description,
+      motivo,
+    },
+    { new: true }
+  ).exec();
 };
-module.exports = { create, update, getById, get };*/
-module.exports = { create, getByIdStudio, deleteDate };
+/*module.exports = { create, update, getById, get };*/
+module.exports = { create, getByIdStudio, getById, deleteDate, update };

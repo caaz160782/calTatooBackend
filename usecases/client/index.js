@@ -44,7 +44,7 @@ const remove = async (clientId) => {
 //modificar
 const update = async (clientId, clientData) => {
   const { password, ...rest } = clientData;
-  console.log("client", clientData);
+  //console.log("client", clientData);
   if (password) {
     const passwordHash = await hash.hashPassword(password);
     return Client.findByIdAndUpdate(clientId, {
@@ -57,12 +57,11 @@ const update = async (clientId, clientData) => {
 };
 const getByStudio = async (idstudio) => {
   // console.log("all", idstudio);
-
   const allUser = await Client.find({ idStudio: idstudio })
     .populate("idRole", ["rol"])
     .where("idRole")
     .equals("61bbeeca3143f1d4146eec10");
-  console.log("all", allUser);
+  //console.log("all", allUser);
   return allUser;
 };
 

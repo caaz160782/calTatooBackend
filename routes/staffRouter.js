@@ -29,7 +29,7 @@ router.post(
   defCurp,
   defRfc,
   async (request, response, next) => {
-    console.log(request.body);
+    //console.log(request.body);
     try {
       let userData = request.body;
       const { Role, picture } = request.body;
@@ -81,7 +81,7 @@ router.get("/", isAdmin, async (request, response, next) => {
 //router.get("/:idUser", isAdmin, async (request, response, next) => {
 router.get("/:idUser", async (request, response, next) => {
   const { idUser } = request.params;
-  console.log(idUser);
+  //console.log(idUser);
   try {
     const userFound = await user.getById(idUser);
     response.json({

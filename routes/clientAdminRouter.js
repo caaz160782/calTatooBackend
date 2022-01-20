@@ -63,7 +63,7 @@ router.post(
   async (request, response, next) => {
     try {
       let clientData = request.body;
-      console.log("cleint data", clientData);
+      //console.log("cleint data", clientData);
       const { Role, picture } = request.body;
       if (Role === "Cliente") {
         if (picture !== "") {
@@ -75,7 +75,7 @@ router.post(
         const { _id } = rols;
         clientData = { ...clientData, idRole: _id.toString() };
         const clientCreated = await client.create(clientData);
-        console.log("cleinte creADO", clientCreated);
+        //console.log("cleinte creADO", clientCreated);
         response.status(201).json({
           status: true,
           message: "New user created",

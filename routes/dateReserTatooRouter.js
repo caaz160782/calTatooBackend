@@ -48,16 +48,10 @@ router.get("/:idDate", async (request, response, next) => {
 });
 
 router.patch("/:idDate", isAdmin, async (req, res, next) => {
-  //console.log(idDate);
-
   try {
     const { idDate } = req.params;
     const dateTatooData = req.body;
-
-    //console.log(dateTatooData);
     const dateUpdate = await dateReservation.update(idDate, dateTatooData);
-    console.log(dateUpdate);
-
     res.status(201).json({
       code: true,
       message: "Updated",

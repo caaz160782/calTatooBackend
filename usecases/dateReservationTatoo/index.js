@@ -51,18 +51,12 @@ const deleteDate = (idDate) => {
 
 // Modificar info de estudios
 const update = async (idDate, dateTatooData) => {
-  const {
-    start,
-    //end,
-    description,
-    motivo,
-  } = dateTatooData;
-  console.log(dateTatooData);
+  const { start, end, description, motivo } = dateTatooData;
   return DateTatoo.findByIdAndUpdate(
     idDate,
     {
       start,
-      //end,
+      end,
       description,
       motivo,
     },

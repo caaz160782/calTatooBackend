@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
 const schema = new Schema({
   id_studio: {
     type: Schema.ObjectId,
@@ -55,6 +54,7 @@ const schema = new Schema({
   },
   motivo: {
     type: String,
+    default: "",
   },
   cost: {
     type: Number,

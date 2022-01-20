@@ -7,11 +7,6 @@ const schema = new Schema({
     ref: "TatooStudio",
     required: true,
   },
-  id_staff: {
-    type: Schema.ObjectId,
-    ref: "User",
-    required: true,
-  },
   id_tatuador: {
     type: Schema.ObjectId,
     ref: "User",
@@ -37,7 +32,7 @@ const schema = new Schema({
   },
   addDate: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
   title: {
     type: String,
@@ -49,7 +44,7 @@ const schema = new Schema({
     minlenght: 1,
     required: true,
   },
-  desPhoto: {
+  desPhotoTatoo: {
     type: String,
     minlenght: 1,
     required: true,
@@ -57,6 +52,9 @@ const schema = new Schema({
   tipoTatoo: {
     type: String,
     required: true,
+  },
+  motivo: {
+    type: String,
   },
   cost: {
     type: Number,

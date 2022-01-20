@@ -6,8 +6,8 @@ const { subirArchivo } = require("../lib/subiendoArchivos");
 
 router.get("/:idClient", async (request, response, next) => {
   const { idClient } = request.params;
-  console.log("si mismo");
-  console.log("gettit a si mismos", idClient);
+  //console.log("si mismo");
+  //console.log("gettit a si mismos", idClient);
   try {
     const clientId = await client.getById(idClient);
     response.json({
@@ -35,7 +35,7 @@ router.patch(
     const clientId = request.id;
 
     if (idClient === clientId) {
-      console.log(`request`, idClient, clientId);
+      //console.log(`request`, idClient, clientId);
       try {
         if (picture !== "") {
           if (request.file.filename) {

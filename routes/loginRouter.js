@@ -6,12 +6,12 @@ const { emailVerifiqued } = require("../middlewares/typesVerified");
 
 //router.post("/", emailVerifiqued, async (req, res, next) => {
 router.post("/", async (req, res, next) => {
-  console.log("login");
-  console.log(req.body);
+  //console.log("login");
+  //console.log(req.body);
   try {
     const userAccess = req.body;
     const resFind = await login.find(userAccess);
-    console.log(resFind);
+    //console.log(resFind);
     const { message, token, infoUser } = resFind;
     if (message === 1) {
       const foundStudio = await studioTat.get(infoUser._id);

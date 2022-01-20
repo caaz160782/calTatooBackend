@@ -30,10 +30,12 @@ router.post("/", async (req, res, next) => {
       res.status(404).json({
         code: "Email/PSW WRONG",
         message: "email or password wrong",
+        error: "Email/PSW WRONG",
       });
     } else if (message === 3) {
       res.status(404).json({
         code: "EMAIL_NOT_FOUND",
+        message: "email or password wrong",
         error: "email not found",
       });
     }

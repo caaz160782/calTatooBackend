@@ -57,12 +57,16 @@ const schema = new Schema({
     default: "",
   },
   cost: {
-    type: Number,
+    type: String,
     required: true,
   },
   estimated: {
-    type: Number,
+    type: String,
     required: true,
+  },
+  statusPago: {
+    type: Boolean,
+    default: false,
   },
 });
 

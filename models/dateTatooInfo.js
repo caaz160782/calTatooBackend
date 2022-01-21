@@ -68,6 +68,22 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
+  display: {
+    type: String,
+    default: "block",
+  },
+  backgroundColor: {
+    type: String,
+    default: "#FFC300",
+  },
+  borderColor: {
+    type: String,
+    default: "#FFC300",
+  },
+  textColor: {
+    type: String,
+    default: "#FF5733",
+  },
 });
 
 module.exports = {

@@ -14,6 +14,7 @@ router.post("/", subirArchivo, async (req, res, next) => {
         dateTatooData = { ...dateTatooData, desPhotoTatoo: req.file.filename };
       }
     }
+    //console.log(dateTatooData);
     const createdDate = await dateReservation.create(dateTatooData);
     res.status(201).json({
       code: "Created",
@@ -21,7 +22,7 @@ router.post("/", subirArchivo, async (req, res, next) => {
       payload: createdDate,
     });
   } catch (error) {
-    //  next(error);
+    next(error);
     res.status(404).json({
       code: false,
       message: "No fue posible crear la cita",
@@ -76,14 +77,14 @@ router.delete("/:idDate", isAdmin, (request, response, next) => {
     response.status(202).json({
       ok: true,
       res: resDelete,
-      message: `Deleted  successfully`,
+      message: `borrado correctamente`,
     });
   } catch (error) {
     next(error);
     response.status(404).json({
       code: false,
       res: resDelete,
-      message: "Can't delete",
+      message: "no se puede borrar",
       error: "error",
     });
   }

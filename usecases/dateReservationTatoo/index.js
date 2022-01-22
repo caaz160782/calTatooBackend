@@ -63,5 +63,22 @@ const update = async (idDate, dateTatooData) => {
     { new: true }
   ).exec();
 };
+const updatePayment = async (idDate) => {
+  // const { start, end, description, motivo } = dateTatooData;
+  return DateTatoo.findByIdAndUpdate(
+    idDate,
+    {
+      statusPago: true,
+    },
+    { new: true }
+  ).exec();
+};
 /*module.exports = { create, update, getById, get };*/
-module.exports = { create, getByIdStudio, getById, deleteDate, update };
+module.exports = {
+  create,
+  getByIdStudio,
+  getById,
+  deleteDate,
+  update,
+  updatePayment,
+};

@@ -4,7 +4,9 @@ const dateReservation = require("../usecases/dateReservationTatoo");
 const { isAdmin } = require("../middlewares/authHandlers");
 const { subirArchivo } = require("../lib/subiendoArchivos");
 
-router.post("/", subirArchivo, isAdmin, async (req, res, next) => {
+//router.post("/", subirArchivo, isAdmin, async (req, res, next) => {
+router.post("/", subirArchivo, async (req, res, next) => {
+  console.log("cita-------", req.body);
   try {
     let dateTatooData = req.body;
     if (req.body.picture !== "") {
@@ -19,8 +21,8 @@ router.post("/", subirArchivo, isAdmin, async (req, res, next) => {
       payload: createdDate,
     });
   } catch (error) {
-    next(error);
-    response.status(404).json({
+    //  next(error);
+    res.status(404).json({
       code: false,
       message: "No fue posible crear la cita",
       error: error,

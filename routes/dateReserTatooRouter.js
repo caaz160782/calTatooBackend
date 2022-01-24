@@ -1,55 +1,88 @@
 const express = require("express");
 const router = express.Router();
 const dateReservation = require("../usecases/dateReservationTatoo");
+const { isAdmin } = require("../middlewares/authHandlers");
+const { subirArchivo } = require("../lib/subiendoArchivos");
 
-router.post("/", async (req, res, next) => {
+router.post("/", subirArchivo, isAdmin, async (req, res, next) => {
   try {
-    const dateTatooData = req.body;
+    let dateTatooData = req.body;
+    if (req.body.picture !== "") {
+      if (req.file.filename) {
+        dateTatooData = { ...dateTatooData, desPhotoTatoo: req.file.filename };
+      }
+    }
+    //console.log(dateTatooData);
     const createdDate = await dateReservation.create(dateTatooData);
     res.status(201).json({
-      code: "Succesful",
-      message: " Created correctly",
+      code: "Created",
+      message: "Cita Creada correctamente",
       payload: createdDate,
     });
   } catch (error) {
     next(error);
+    res.status(404).json({
+      code: false,
+      message: "No fue posible crear la cita",
+      error: error,
+    });
   }
 });
 
-router.get("/:idStudio", async (request, response, next) => {
-  const { idStudio } = request.params;
-  //console.log(idStudio);
+router.get("/:idDate", async (request, response, next) => {
+  const { idDate } = request.params;
   try {
-    const dates = await dateReservation.getByIdStudio(idStudio);
-    response.json({
+    const dates = await dateReservation.getById(idDate);
+    response.status(201).json({
       code: true,
       message: "Done",
-      payload: { dates },
+      payload: dates,
     });
   } catch (error) {
     //next(error)
     response.status(404).json({
       code: false,
-      message: "Dates not found",
+      message: "Ninguna Cita Encontrada",
+      error: error,
     });
   }
 });
 
-router.delete("/:idDate", (request, response, next) => {
+router.patch("/:idDate", isAdmin, async (req, res, next) => {
+  try {
+    const { idDate } = req.params;
+    const dateTatooData = req.body;
+    const dateUpdate = await dateReservation.update(idDate, dateTatooData);
+    res.status(201).json({
+      code: true,
+      message: "Updated",
+      payload: dateUpdate,
+    });
+  } catch (error) {
+    next(error);
+    res.status(404).json({
+      code: false,
+      message: "cita no encontrada",
+      error: error,
+    });
+  }
+});
+
+router.delete("/:idDate", isAdmin, (request, response, next) => {
   try {
     const { idDate } = request.params;
-    const resDelete = dateReservation.delete(idDate);
+    const resDelete = dateReservation.deleteDate(idDate);
     response.status(202).json({
       ok: true,
       res: resDelete,
-      message: `Deleted  successfully`,
+      message: `borrado correctamente`,
     });
   } catch (error) {
     next(error);
     response.status(404).json({
       code: false,
       res: resDelete,
-      message: "Can't delete",
+      message: "no se puede borrar",
       error: "error",
     });
   }

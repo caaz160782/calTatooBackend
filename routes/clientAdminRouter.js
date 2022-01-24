@@ -14,10 +14,13 @@ const {
 const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
 const rol = require("../usecases/rols");
+const { subirArchivo } = require("../lib/subiendoArchivos");
 
 //cliente por id
-router.get("/:idClient", isMember, async (request, response, next) => {
+//router.get("/:idClient", isMember, async (request, response, next) => {
+router.get("/:idClient", async (request, response, next) => {
   const { idClient } = request.params;
+  console.log("gettit");
   try {
     const clientId = await client.getById(idClient);
     response.json({
@@ -50,21 +53,29 @@ router.get("/", isMember, async (request, response, next) => {
 //crea a los clientes
 router.post(
   "/",
-  verifiedAge,
-  pswDefinition,
-  isMember,
-  defphonePersonal,
+  subirArchivo,
+  // verifiedAge,
+  // pswDefinition,
+  //isMember,
+  // defphonePersonal,
   // [check("email").custom(existEmail), validarCampos],
   //[check("email", "el correo no es valido").isEmail(), validarCampos],
   async (request, response, next) => {
     try {
       let clientData = request.body;
-      const { Role } = request.body;
+      //console.log("cleint data", clientData);
+      const { Role, picture } = request.body;
       if (Role === "Cliente") {
+        if (picture !== "") {
+          if (request.file.filename) {
+            request.body.picture = request.file.filename;
+          }
+        }
         const rols = await rol.find("Cliente");
         const { _id } = rols;
         clientData = { ...clientData, idRole: _id.toString() };
         const clientCreated = await client.create(clientData);
+        //console.log("cleinte creADO", clientCreated);
         response.status(201).json({
           status: true,
           message: "New user created",
@@ -79,41 +90,45 @@ router.post(
   }
 );
 
-router.patch("/:idClient", isMember, async (request, response, next) => {
-  const { idClient } = request.params;
-  const clientData = request.body;
-  const clientId = clientData._id;
+router.patch(
+  "/:idClient",
+  subirArchivo,
+  isMember,
+  async (request, response, next) => {
+    const { idClient } = request.params;
 
-  if (idClient === clientId) {
+    const { picture } = request.body;
+    // const clientId = clientData._id;
+
     try {
-      const clientUpdate = await client.update(idClient, clientData);
+      if (picture !== "") {
+        if (request.file.filename) {
+          request.body.picture = request.file.filename;
+        }
+      }
+      const clientUpdate = await client.update(idClient, request.body);
       response.status(201).json({
         ok: true,
-        message: `Updated`,
+        message: `modificado por el administrador`,
         clientUpdate,
       });
     } catch (error) {
-      next(error);
+      //next(error);
       response.status(404).json({
         status: false,
         message: "Client not found",
       });
     }
-  } else {
-    response.status(404).json({
-      ok: false,
-      message: "Can´t updated",
-    });
   }
-});
+);
 //eliminar
 router.delete("/:idClient", isAdmin, (request, response, next) => {
   try {
     const { idClient } = request.params;
-    const clientId = client.del(idClient);
+    const clientId = client.remove(idClient);
     response.status(202).json({
       ok: true,
-      message: `Deleted  ${idClient} successfully`,
+      message: `Deleted  successfully!!`,
     });
   } catch (error) {
     next(error);

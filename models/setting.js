@@ -9,7 +9,6 @@ const schema = new Schema({
   },
   logo: {
     type: String,
-    minlenght: 1,
   },
   timeToOpen: {
     type: String,

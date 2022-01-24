@@ -21,6 +21,8 @@ router.post(
   emailVerifiqued,
   [check("email").custom(existEmail), validarCampos],
   async (req, res, next) => {
+    let userData = req.body;
+    console.log("userData");
     try {
       let userData = req.body;
       const { register } = req.body;
@@ -36,11 +38,17 @@ router.post(
         });
       } else {
         res.status(400).json({
+          code: "Unable to create user",
           status: "false",
           message: "Unable to create user",
         });
       }
     } catch (error) {
+      res.status(400).json({
+        code: "Unable to create user",
+        status: "false",
+        message: "error",
+      });
       next(error);
     }
   }

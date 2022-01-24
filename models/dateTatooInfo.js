@@ -1,15 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
 const schema = new Schema({
   id_studio: {
     type: Schema.ObjectId,
     ref: "TatooStudio",
-    required: true,
-  },
-  id_staff: {
-    type: Schema.ObjectId,
-    ref: "User",
     required: true,
   },
   id_tatuador: {
@@ -35,9 +29,17 @@ const schema = new Schema({
     type: String,
     required: true,
   },
+  hourTatooStart: {
+    type: String,
+    required: true,
+  },
+  hourTatooFinish: {
+    type: String,
+    required: true,
+  },
   addDate: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
   title: {
     type: String,
@@ -49,7 +51,7 @@ const schema = new Schema({
     minlenght: 1,
     required: true,
   },
-  desPhoto: {
+  desPhotoTatoo: {
     type: String,
     minlenght: 1,
     required: true,
@@ -58,13 +60,37 @@ const schema = new Schema({
     type: String,
     required: true,
   },
+  motivo: {
+    type: String,
+    default: "",
+  },
   cost: {
-    type: Number,
+    type: String,
     required: true,
   },
   estimated: {
-    type: Number,
+    type: String,
     required: true,
+  },
+  statusPago: {
+    type: Boolean,
+    default: false,
+  },
+  display: {
+    type: String,
+    default: "block",
+  },
+  backgroundColor: {
+    type: String,
+    default: "#FFC300",
+  },
+  borderColor: {
+    type: String,
+    default: "#FFC300",
+  },
+  textColor: {
+    type: String,
+    default: "#FF5733",
   },
 });
 

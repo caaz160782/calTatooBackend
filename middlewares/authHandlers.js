@@ -12,7 +12,7 @@ const validarCampos = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
   const { apitoken } = req.headers;
-  //console.log(apitoken);
+  //console.log("apitoken", apitoken);
   if (apitoken !== undefined) {
     try {
       const verify = jwt.verify(apitoken); //valida que el token se valido
@@ -24,6 +24,7 @@ const isAdmin = (req, res, next) => {
         res.status(403).json({
           code: "Unauthorized",
           message: "Unauthorized",
+          error: "no esta autorizado",
         });
       }
     } catch (error) {
@@ -32,11 +33,13 @@ const isAdmin = (req, res, next) => {
         res.status(401).json({
           code: "TokenExpiredError",
           message: "timeExpired",
+          error: "token expirado",
         });
       } else if (name === "JsonWebTokenError") {
         res.status(403).json({
-          ok: false,
+          code: "TokenExpiredError",
           message: "Unauthorized",
+          error: "no esta autorizado",
         });
       }
     }
@@ -44,6 +47,7 @@ const isAdmin = (req, res, next) => {
     res.status(403).json({
       code: "TokenNotExist",
       message: "Unauthorized",
+      error: "no esta autorizado",
     });
   }
 };
@@ -61,6 +65,7 @@ const isMember = (req, res, next) => {
         res.status(403).json({
           code: "Unauthorized",
           message: "Unauthorized",
+          error: "no esta autorizado",
         });
       }
     } catch (error) {
@@ -69,12 +74,14 @@ const isMember = (req, res, next) => {
         res.status(401).json({
           code: "TokenExpiredError",
           message: "timeExpired",
+          error: "no esta autorizado",
         });
         S;
       } else if (name === "JsonWebTokenError") {
         res.status(403).json({
           ok: false,
           message: "Unauthorized",
+          error: "no esta autorizado",
         });
       }
     }
@@ -82,16 +89,15 @@ const isMember = (req, res, next) => {
     res.status(403).json({
       code: "TokenNotExist",
       message: "Unauthorized",
+      error: "no esta autorizado",
     });
   }
 };
 
 const correoExiste = async (req, res, next) => {
   const { email } = req.body;
-  console.log(req.body);
   const emailExist = await User.findOne({ email });
   if (emailExist) {
-    console.log("email existe");
     res.status(404).json({
       code: "CORREO_EXIST",
       message: "correo ya existe",
@@ -112,6 +118,7 @@ const isClient = (req, res, next) => {
   } else {
     res.status(403).json({
       message: " Unauthorized",
+      error: "no esta autorizado",
     });
   }
 };

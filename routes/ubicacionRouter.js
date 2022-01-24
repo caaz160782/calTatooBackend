@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const localidad = require("../usecases/ubicacion");
+const { isAdmin } = require("../middlewares/authHandlers");
 
-router.get("/:cp", async (request, response, next) => {
-  const {cp} = request.params   
+router.get("/:cp", isAdmin, async (request, response, next) => {
+  const { cp } = request.params;
   try {
     const localidades = await localidad.find(cp);
     response.json({
@@ -17,22 +18,19 @@ router.get("/:cp", async (request, response, next) => {
   }
 });
 
-router.get("/",async (request, response ,next)=>{
-  try{    
-   const all= await localidad.get();
-   response.json({
-       ok:true,
-       message:"Done",
-       listUser:{
-        all
-       }
-   })
- }
-  catch (error){
-  next(error)
-}
-})
-
-
+router.get("/", async (request, response, next) => {
+  try {
+    const all = await localidad.get();
+    response.json({
+      ok: true,
+      message: "Done",
+      listUser: {
+        all,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

@@ -12,7 +12,9 @@ const settingStudioRouter = require("./settingStudioRouter");
 const catRemClientRouter = require("./caRememberRouter");
 const findByStudioSettingRouter = require("./findBySettingStudioRouter");
 const findByStudioStaffRouter = require("./staffByStudioRouter");
+const findByStudioClientfRouter = require("./clientByStudioRouter");
 const dateTatoo = require("./dateReserTatooRouter");
+const dateTatooByStudio = require("./dateByStudio");
 
 const apiRouter = (app) => {
   app.use("/rols", rolRouter);
@@ -29,6 +31,8 @@ const apiRouter = (app) => {
   app.use("/clientRemember", catRemClientRouter);
   app.use("/findStudiSetting", findByStudioSettingRouter);
   app.use("/findStaffByStudy", findByStudioStaffRouter);
+  app.use("/findClientByStudy", findByStudioClientfRouter);
   app.use("/dateTatoo", dateTatoo);
+  app.use("/dateTatoobyStudio", dateTatooByStudio);
 };
 module.exports = apiRouter;

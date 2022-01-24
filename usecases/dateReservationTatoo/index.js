@@ -8,8 +8,9 @@ const create = async (agendaTatooData) => {
     id_size,
     start,
     end,
-    addDate,
     title,
+    hourTatooStart,
+    hourTatooFinish,
     description,
     desPhotoTatoo,
     tipoTatoo,
@@ -23,8 +24,9 @@ const create = async (agendaTatooData) => {
     id_size,
     start,
     end,
+    hourTatooStart,
+    hourTatooFinish,
     title,
-    addDate,
     description,
     desPhotoTatoo,
     tipoTatoo,
@@ -35,13 +37,17 @@ const create = async (agendaTatooData) => {
   return saveDate;
 };
 
-const getById = async (idStudio) => {
-  const studio = await DateTatoo.findById(idStudio).exec();
+const getById = async (idStudioDate) => {
+  const studio = await DateTatoo.findById(idStudioDate)
+    .populate("id_tatuador", ["name", "lastName"])
+    .exec();
   return studio;
 };
 
 const getByIdStudio = async (idStudio) => {
-  const dateByStudio = await DateTatoo.find({ id_studio: idStudio }).exec();
+  const dateByStudio = await DateTatoo.find({ id_studio: idStudio })
+    .populate("id_tatuador", ["name", "lastName"])
+    .exec();
   return dateByStudio;
 };
 
@@ -51,17 +57,17 @@ const deleteDate = (idDate) => {
 
 // Modificar info de estudios
 const update = async (idDate, dateTatooData) => {
-  const { start, end, description, motivo } = dateTatooData;
+  const { start, end, hourTatooStart, hourTatooFinish, motivo } = dateTatooData;
   return DateTatoo.findByIdAndUpdate(
     idDate,
     {
       start,
       end,
-      description,
+      hourTatooStart,
+      hourTatooFinish,
       motivo,
     },
     { new: true }
   ).exec();
 };
-/*module.exports = { create, update, getById, get };*/
 module.exports = { create, getByIdStudio, getById, deleteDate, update };

@@ -51,7 +51,6 @@ const { subirArchivo } = require("../lib/subiendoArchivos");
 
 router.patch("/:idDate", async (req, res, next) => {
   const { idDate } = req.params;
-  console.log("actualizando", idDate);
   try {
     // const dateTatooData = req.body;
     const dateUpdate = await dateReservation.updatePayment(idDate);

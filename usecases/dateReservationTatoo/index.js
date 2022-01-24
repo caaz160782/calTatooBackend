@@ -69,6 +69,9 @@ const updatePayment = async (idDate) => {
     idDate,
     {
       statusPago: true,
+      backgroundColor: "#519259",
+      textColor: "#FAEEE7",
+      borderColor: "#24A19C",
     },
     { new: true }
   ).exec();

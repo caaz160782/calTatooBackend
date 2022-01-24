@@ -5,14 +5,10 @@ require("dotenv").config();
 
 // Agrega credenciales QUIEN ES EL VENDEDOR
 mercadopago.configure({
-  access_token:
-    //"TEST-191969807847020-012004-c4fc62922024f1d6e3759d3a4251e10b-1060097981", //test
-    "APP_USR-191969807847020-012004-5834c6c5c2c48a796ff846eb9db206dd-1060097981", //  este es de produccion
+  access_token: process.env.ACCESS_TOKEN,
 });
 
 router.post("/", (req, res) => {
-  // Crea un objeto de preferencia
-  console.log(req.body);
   let preference = {
     back_urls: {
       success: "http://localhost:3000/agenda",
@@ -37,10 +33,6 @@ router.post("/", (req, res) => {
   mercadopago.preferences
     .create(preference)
     .then(function (response) {
-      // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-      //  global.id = response.body.id;
-
-      console.log("-----", response.body.id);
       res.redirect(response.body.init_point);
       //res.redirect(response.body.sandbox_init_point);
       // res.json({

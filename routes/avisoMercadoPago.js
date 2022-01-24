@@ -1,15 +1,45 @@
 const express = require("express");
 const router = express.Router();
 const mercadopago = require("mercadopago");
+const dateReservation = require("../usecases/dateReservationTatoo");
 require("dotenv").config();
 
-router.post("/", (req, res) => {
-  console.log(req.query);
-  res.json({
-    Payment: req.query.payment_id,
-    Status: req.query.status,
-    MerchantOrder: req.query.merchant_order_id,
-  });
+router.post("/", async (req, res) => {
+  const payment = await mercadopago.payment.findById(req.body.paymentId);
+  console.log("acaaaa", payment.body.status, payment.body.external_reference);
+  const status = payment.body.status;
+  if (status === "approved") {
+    try {
+      // const dateTatooData = req.body;
+      const dateUpdate = await dateReservation.updatePayment(
+        payment.body.external_reference
+      );
+      res.status(201).json({
+        code: true,
+        message: "Updated",
+        status,
+        payload: dateUpdate,
+      });
+    } catch (error) {
+      res.status(404).json({
+        code: false,
+        message: "cita no encontrada",
+        error: error,
+      });
+    }
+  } else {
+    res.status(404).json({
+      code: false,
+      message: "pago no aprobado",
+      error: error,
+    });
+  }
+
+  // res.json({
+  //   Payment: req.query.payment_id,
+  //   Status: req.query.status,
+  //   MerchantOrder: req.query.merchant_order_id,
+  // });
   //res.redirect(response.body.sandbox_init_point);
 });
 

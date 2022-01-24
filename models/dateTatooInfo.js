@@ -29,6 +29,14 @@ const schema = new Schema({
     type: String,
     required: true,
   },
+  hourTatooStart: {
+    type: String,
+    required: true,
+  },
+  hourTatooFinish: {
+    type: String,
+    required: true,
+  },
   addDate: {
     type: Date,
     default: Date.now,

@@ -15,6 +15,7 @@ const findByStudioStaffRouter = require("./staffByStudioRouter");
 const findByStudioClientfRouter = require("./clientByStudioRouter");
 const dateTatoo = require("./dateReserTatooRouter");
 const dateTatooByStudio = require("./dateByStudio");
+const activaUser = require("./activaRouter");
 
 const apiRouter = (app) => {
   app.use("/rols", rolRouter);
@@ -34,5 +35,6 @@ const apiRouter = (app) => {
   app.use("/findClientByStudy", findByStudioClientfRouter);
   app.use("/dateTatoo", dateTatoo);
   app.use("/dateTatoobyStudio", dateTatooByStudio);
+  app.use("/activa", activaUser);
 };
 module.exports = apiRouter;

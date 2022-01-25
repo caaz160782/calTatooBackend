@@ -14,8 +14,6 @@ const get = async () => {
 //ver los detalles de cliente  id
 const getById = async (clientId) => {
   const client = await Client.findById(clientId);
-
-  // .populate("idRole", ["rol"])
   // .where("idRole")
   // .equals("61bbeeca3143f1d4146eec10")
   // .exec();
@@ -23,13 +21,10 @@ const getById = async (clientId) => {
 };
 //crear cliente
 const create = async (clientData) => {
-  const { password, ...rest } = clientData;
-  // console.log("userData", clientData);
-  const passwordHash = await hash.hashPassword(password);
-  const client = new Client({
-    password: passwordHash,
-    ...rest,
-  });
+  //const { password, ...rest } = clientData;
+  //console.log(clientData);
+  // const passwordHash = await hash.hashPassword(password);
+  const client = new Client(clientData);
   const savedClient = await client.save();
   return savedClient;
 };

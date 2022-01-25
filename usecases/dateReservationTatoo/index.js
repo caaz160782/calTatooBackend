@@ -70,4 +70,25 @@ const update = async (idDate, dateTatooData) => {
     { new: true }
   ).exec();
 };
-module.exports = { create, getByIdStudio, getById, deleteDate, update };
+const updatePayment = async (idDate) => {
+  // const { start, end, description, motivo } = dateTatooData;
+  return DateTatoo.findByIdAndUpdate(
+    idDate,
+    {
+      statusPago: true,
+      backgroundColor: "#519259",
+      textColor: "#FAEEE7",
+      borderColor: "#24A19C",
+    },
+    { new: true }
+  ).exec();
+};
+/*module.exports = { create, update, getById, get };*/
+module.exports = {
+  create,
+  getByIdStudio,
+  getById,
+  deleteDate,
+  update,
+  updatePayment,
+};

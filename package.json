@@ -20,8 +20,10 @@
   "author": "Equipo Calendar Tatoo",
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "date-fns": "^2.28.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
@@ -30,7 +32,8 @@
     "mongoose": "^6.0.14",
     "mongoose-type-email": "^1.1.2",
     "multer": "^1.4.4",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

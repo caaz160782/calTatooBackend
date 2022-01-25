@@ -6,8 +6,6 @@ const { subirArchivo } = require("../lib/subiendoArchivos");
 
 router.get("/:idClient", async (request, response, next) => {
   const { idClient } = request.params;
-  //console.log("si mismo");
-  //console.log("gettit a si mismos", idClient);
   try {
     const clientId = await client.getById(idClient);
     response.json({

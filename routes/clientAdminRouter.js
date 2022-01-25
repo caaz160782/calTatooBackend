@@ -25,7 +25,6 @@ const sendEmail = (to, subject, text) => {
     to: to, // Change to your recipient
     from: "admin@perfecttimeink.info ", // Change to your verified sender
     subject: subject, //subject: 'Sending with SendGrid is Fun',
-    //text: 'and easy to do anywhere, even with Node.js',
     html: `Por favor da click en el siguiente enlace <strong> <a href=${text}> ${text} </a></strong> para que puedas agendar tus citas mas adelante`,
   };
   sgMail
@@ -93,10 +92,7 @@ router.post(
         const { _id } = rols;
         clientData = { ...clientData, idRole: _id.toString() };
         const clientCreated = await client.create(clientData);
-        //console.log("cleinte creADO", clientCreated);
         const sendAct = await activa.create(clientCreated._id);
-        //console.log(sendAct);
-        //console.log(serverSend + "/activa/" + sendAct.hash);
         const liga = serverSend + "/cuenta/" + sendAct.hash;
         sendEmail(clientCreated.email, `Crea tu password`, liga);
         response.status(201).json({

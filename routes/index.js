@@ -17,6 +17,7 @@ const dateTatoo = require("./dateReserTatooRouter");
 const datePayment = require("./datePayedRouter");
 const dateTatooByStudio = require("./dateByStudio");
 const activaUser = require("./activaRouter");
+const findEmail = require("./findByEmail");
 const mercadoPagoRouter = require("./mercadoPago");
 const avisoMercadoPagoRouter = require("./avisoMercadoPago");
 const allStudioRouter = require("./allStudioRouter");
@@ -41,6 +42,7 @@ const apiRouter = (app) => {
   app.use("/datePayment", datePayment);
   app.use("/dateTatoobyStudio", dateTatooByStudio);
   app.use("/activa", activaUser);
+  app.use("/findByEmail", findEmail);
   app.use("/checkout", mercadoPagoRouter);
   app.use("/feedback", avisoMercadoPagoRouter);
   app.use("/allStudio", allStudioRouter);

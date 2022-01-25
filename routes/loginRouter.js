@@ -11,7 +11,6 @@ router.post("/", async (req, res, next) => {
   try {
     const userAccess = req.body;
     const resFind = await login.find(userAccess);
-    //console.log(resFind);
     const { message, token, infoUser } = resFind;
     if (message === 1) {
       const foundStudio = await studioTat.get(infoUser._id);

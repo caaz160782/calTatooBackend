@@ -9,6 +9,7 @@ router.post("/:id", async (req, res, next) => {
     const { id } = req.params;
     const { diaHoy } = req.body;
     const infoHash = await activa.get(id);
+    //console.log(infoHash);
     const result = differenceInMilliseconds(
       parseISO(diaHoy),
       infoHash.addedDate

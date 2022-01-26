@@ -53,7 +53,6 @@ const getByStudio = async (idstudio) => {
 
 const getByEmail = async (email) => {
   const { emailFind } = email;
-  //console.log(emailFind);
   const client = await Client.findOne({ email: emailFind });
   return client;
 };

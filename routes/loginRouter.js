@@ -19,6 +19,7 @@ router.post("/", async (req, res, next) => {
       }
       if (infoUser.rol === "Cliente" || infoUser.rol === "tatuador") {
         foundStudio = await studioTat.getById(infoUser.idStudio);
+        console.log();
       }
       let infoStudio = {};
       if (foundStudio !== null) {

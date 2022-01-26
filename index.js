@@ -10,6 +10,7 @@ app.use(express.static("uploads"));
 //escucha todas las solicitudes para parsear a json
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: false }));
 apiRouter(app);
 //levantar el servidor
 app.listen(port, () => {

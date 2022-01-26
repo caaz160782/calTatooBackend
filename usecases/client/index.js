@@ -14,28 +14,16 @@ const get = async () => {
 //ver los detalles de cliente  id
 const getById = async (clientId) => {
   const client = await Client.findById(clientId);
-
-  // .populate("idRole", ["rol"])
-  // .where("idRole")
-  // .equals("61bbeeca3143f1d4146eec10")
-  // .exec();
   return client;
 };
 //crear cliente
 const create = async (clientData) => {
-  const { password, ...rest } = clientData;
-  // console.log("userData", clientData);
-  const passwordHash = await hash.hashPassword(password);
-  const client = new Client({
-    password: passwordHash,
-    ...rest,
-  });
+  const client = new Client(clientData);
   const savedClient = await client.save();
   return savedClient;
 };
 //eliminar
 const remove = async (clientId) => {
-  //console.log(clientId);
   const clientBorrado = await Client.findByIdAndUpdate(clientId, {
     statusUser: false,
   }).exec();
@@ -44,7 +32,6 @@ const remove = async (clientId) => {
 //modificar
 const update = async (clientId, clientData) => {
   const { password, ...rest } = clientData;
-  //console.log("client", clientData);
   if (password) {
     const passwordHash = await hash.hashPassword(password);
     return Client.findByIdAndUpdate(clientId, {
@@ -61,8 +48,32 @@ const getByStudio = async (idstudio) => {
     .populate("idRole", ["rol"])
     .where("idRole")
     .equals("61bbeeca3143f1d4146eec10");
-  //console.log("all", allUser);
   return allUser;
 };
 
-module.exports = { get, getById, create, remove, update, getByStudio };
+const getByEmail = async (email) => {
+  const { emailFind } = email;
+  //console.log(emailFind);
+  const client = await Client.findOne({ email: emailFind });
+  return client;
+};
+
+const updatePassword = async (clientId, clientData) => {
+  const { password, ...rest } = clientData;
+  const passwordHash = await hash.hashPassword(password);
+  return Client.findByIdAndUpdate(clientId, {
+    ...rest,
+    password: passwordHash,
+  }).exec();
+};
+
+module.exports = {
+  get,
+  getById,
+  create,
+  remove,
+  update,
+  getByStudio,
+  getByEmail,
+  updatePassword,
+};

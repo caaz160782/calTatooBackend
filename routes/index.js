@@ -14,7 +14,15 @@ const findByStudioSettingRouter = require("./findBySettingStudioRouter");
 const findByStudioStaffRouter = require("./staffByStudioRouter");
 const findByStudioClientfRouter = require("./clientByStudioRouter");
 const dateTatoo = require("./dateReserTatooRouter");
+const datePayment = require("./datePayedRouter");
 const dateTatooByStudio = require("./dateByStudio");
+const activaUser = require("./activaRouter");
+const findEmail = require("./findByEmail");
+const dateByStudioClient = require("./dateByStudioClient");
+const dateByStudioStaff = require("./dateByStudioStaff");
+const mercadoPagoRouter = require("./mercadoPago");
+const avisoMercadoPagoRouter = require("./avisoMercadoPago");
+const allStudioRouter = require("./allStudioRouter");
 
 const apiRouter = (app) => {
   app.use("/rols", rolRouter);
@@ -33,6 +41,14 @@ const apiRouter = (app) => {
   app.use("/findStaffByStudy", findByStudioStaffRouter);
   app.use("/findClientByStudy", findByStudioClientfRouter);
   app.use("/dateTatoo", dateTatoo);
+  app.use("/datePayment", datePayment);
   app.use("/dateTatoobyStudio", dateTatooByStudio);
+  app.use("/activa", activaUser);
+  app.use("/findByEmail", findEmail);
+  app.use("/checkout", mercadoPagoRouter);
+  app.use("/clientDate", dateByStudioClient);
+  app.use("/staffDate", dateByStudioStaff);
+  app.use("/feedback", avisoMercadoPagoRouter);
+  app.use("/allStudio", allStudioRouter);
 };
 module.exports = apiRouter;

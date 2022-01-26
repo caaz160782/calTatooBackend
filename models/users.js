@@ -28,8 +28,8 @@ const schema = new Schema({
   password: {
     type: String,
     trim: true,
-    minLength: [8, "the password required a minimun 8 characters"],
-    required: [true, "Required name"],
+    //minLength: [8, "the password required a minimun 8 characters"],
+    //  required: [true, "Required name"],
   },
   email: {
     type: mongoose.SchemaTypes.Email,

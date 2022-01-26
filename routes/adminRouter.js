@@ -23,7 +23,6 @@ router.post(
   // [check("email").custom(existEmail), validarCampos],
   async (req, res, next) => {
     let userData = req.body;
-    console.log("userData");
     try {
       let userData = req.body;
       const { register } = req.body;

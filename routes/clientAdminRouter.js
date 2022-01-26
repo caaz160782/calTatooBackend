@@ -11,16 +11,36 @@ const {
   pswDefinition,
   defphonePersonal,
 } = require("../middlewares/typesVerified");
-const { check } = require("express-validator");
-const { existEmail } = require("../usecases/verifica.js");
 const rol = require("../usecases/rols");
 const { subirArchivo } = require("../lib/subiendoArchivos");
+const config = require("../lib/config");
+const sgMail = require("@sendgrid/mail");
+const keyGrid = config.sendgrid.api_key;
+const activa = require("../usecases/activacion");
+const serverSend = config.server.serverH;
+
+const sendEmail = (to, subject, text) => {
+  sgMail.setApiKey(keyGrid);
+  const msg = {
+    to: to, // Change to your recipient
+    from: "admin@perfecttimeink.info ", // Change to your verified sender
+    subject: subject, //subject: 'Sending with SendGrid is Fun',
+    html: `Por favor da click en el siguiente enlace <strong> <a href=${text}> ${text} </a></strong> para que puedas agendar tus citas mas adelante`,
+  };
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log("Email sent");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  return sgMail;
+};
 
 //cliente por id
-//router.get("/:idClient", isMember, async (request, response, next) => {
-router.get("/:idClient", async (request, response, next) => {
+router.get("/:idClient", isMember, async (request, response, next) => {
   const { idClient } = request.params;
-  console.log("gettit");
   try {
     const clientId = await client.getById(idClient);
     response.json({
@@ -54,12 +74,9 @@ router.get("/", isMember, async (request, response, next) => {
 router.post(
   "/",
   subirArchivo,
-  // verifiedAge,
-  // pswDefinition,
-  //isMember,
-  // defphonePersonal,
-  // [check("email").custom(existEmail), validarCampos],
-  //[check("email", "el correo no es valido").isEmail(), validarCampos],
+  verifiedAge,
+  isMember,
+  defphonePersonal,
   async (request, response, next) => {
     try {
       let clientData = request.body;
@@ -75,7 +92,9 @@ router.post(
         const { _id } = rols;
         clientData = { ...clientData, idRole: _id.toString() };
         const clientCreated = await client.create(clientData);
-        //console.log("cleinte creADO", clientCreated);
+        const sendAct = await activa.create(clientCreated._id);
+        const liga = serverSend + "/cuenta/" + sendAct.hash;
+        sendEmail(clientCreated.email, `Crea tu password`, liga);
         response.status(201).json({
           status: true,
           message: "New user created",
@@ -96,10 +115,8 @@ router.patch(
   isMember,
   async (request, response, next) => {
     const { idClient } = request.params;
-
     const { picture } = request.body;
     // const clientId = clientData._id;
-
     try {
       if (picture !== "") {
         if (request.file.filename) {
@@ -128,7 +145,7 @@ router.delete("/:idClient", isAdmin, (request, response, next) => {
     const clientId = client.remove(idClient);
     response.status(202).json({
       ok: true,
-      message: `Deleted  successfully!!`,
+      message: `Dado de baja correctamente`,
     });
   } catch (error) {
     next(error);

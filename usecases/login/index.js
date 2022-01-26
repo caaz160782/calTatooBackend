@@ -6,6 +6,7 @@ const find = async (userAccess) => {
   const { email, password } = userAccess;
   const passwordF = password;
   const found = await User.findOne({ email }).populate("idRole", ["rol"]);
+  //console.log(1, found);
   if (found !== null) {
     const {
       _id,
@@ -14,6 +15,7 @@ const find = async (userAccess) => {
       picture,
       idRole,
       password,
+      idStudio,
       registerStudio,
       finishConfig,
     } = found;
@@ -31,6 +33,7 @@ const find = async (userAccess) => {
       const token = jwt.token(payload);
       const infoUser = {
         _id,
+        idStudio,
         rol,
         name: fullName,
         picture,

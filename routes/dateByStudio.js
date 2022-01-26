@@ -21,5 +21,4 @@ router.get("/:idStudio", isAdmin, async (request, response, next) => {
     });
   }
 });
-
 module.exports = router;

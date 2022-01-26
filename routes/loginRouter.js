@@ -11,10 +11,16 @@ router.post("/", async (req, res, next) => {
   try {
     const userAccess = req.body;
     const resFind = await login.find(userAccess);
-    //console.log(resFind);
     const { message, token, infoUser } = resFind;
     if (message === 1) {
-      const foundStudio = await studioTat.get(infoUser._id);
+      let foundStudio;
+      if (infoUser.rol === "Administrador") {
+        foundStudio = await studioTat.getAdmin(infoUser._id);
+      }
+      if (infoUser.rol === "Cliente" || infoUser.rol === "tatuador") {
+        foundStudio = await studioTat.getById(infoUser.idStudio);
+        console.log();
+      }
       let infoStudio = {};
       if (foundStudio !== null) {
         const { _id, name } = foundStudio;

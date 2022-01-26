@@ -1,11 +1,37 @@
 const express = require("express");
 const router = express.Router();
 const dateReservation = require("../usecases/dateReservationTatoo");
-const { isAdmin } = require("../middlewares/authHandlers");
+const { isAdmin, isRegister } = require("../middlewares/authHandlers");
 const { subirArchivo } = require("../lib/subiendoArchivos");
+const config = require("../lib/config");
+const sgMail = require("@sendgrid/mail");
+const keyGrid = config.sendgrid.api_key;
+const client = require("../usecases/client");
+
+const sendEmail = (to, subject, text) => {
+  sgMail.setApiKey(keyGrid);
+  const msg = {
+    to: to, // Change to your recipient
+    from: "admin@perfecttimeink.info ", // Change to your verified sender
+    subject: subject, //subject: 'Sending with SendGrid is Fun',
+    //text: 'and easy to do anywhere, even with Node.js',
+    html: `<strong>${text}</strong>`,
+  };
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log("Email sent");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  return sgMail;
+};
 
 //router.post("/", subirArchivo, isAdmin, async (req, res, next) => {
 router.post("/", subirArchivo, async (req, res, next) => {
+  //console.log("cita-------", req.body);
   try {
     let dateTatooData = req.body;
     if (req.body.picture !== "") {
@@ -13,13 +39,20 @@ router.post("/", subirArchivo, async (req, res, next) => {
         dateTatooData = { ...dateTatooData, desPhotoTatoo: req.file.filename };
       }
     }
-    //console.log(dateTatooData);
     const createdDate = await dateReservation.create(dateTatooData);
-    res.status(201).json({
-      code: "Created",
-      message: "Cita Creada correctamente",
-      payload: createdDate,
-    });
+    if (Object.keys(createdDate).length !== 0) {
+      const findClient = await client.getById(createdDate.id_cliente);
+      sendEmail(
+        findClient.email,
+        `cita creada tatuaje ${createdDate.title}`,
+        "!Felicidades su cita fue agendada correctamente¡"
+      );
+      res.status(201).json({
+        code: "Created",
+        message: "Cita Creada correctamente",
+        payload: createdDate,
+      });
+    }
   } catch (error) {
     next(error);
     res.status(404).json({
@@ -49,16 +82,24 @@ router.get("/:idDate", async (request, response, next) => {
   }
 });
 
-router.patch("/:idDate", isAdmin, async (req, res, next) => {
+router.patch("/:idDate", isRegister, async (req, res, next) => {
   try {
     const { idDate } = req.params;
     const dateTatooData = req.body;
     const dateUpdate = await dateReservation.update(idDate, dateTatooData);
-    res.status(201).json({
-      code: true,
-      message: "Updated",
-      payload: dateUpdate,
-    });
+    if (Object.keys(dateUpdate).length !== 0) {
+      const findClient = await client.getById(dateUpdate.id_cliente);
+      sendEmail(
+        findClient.email,
+        `cita reagendada`,
+        "!Felicidades su cita fue reagendada correctamente¡"
+      );
+      res.status(201).json({
+        code: true,
+        message: "Updated",
+        payload: dateUpdate,
+      });
+    }
   } catch (error) {
     next(error);
     res.status(404).json({
@@ -69,7 +110,7 @@ router.patch("/:idDate", isAdmin, async (req, res, next) => {
   }
 });
 
-router.delete("/:idDate", isAdmin, (request, response, next) => {
+router.delete("/:idDate", isRegister, (request, response, next) => {
   try {
     const { idDate } = request.params;
     const resDelete = dateReservation.deleteDate(idDate);

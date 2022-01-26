@@ -51,6 +51,24 @@ const getByIdStudio = async (idStudio) => {
   return dateByStudio;
 };
 
+const getByIdStudioClient = async (idStudio, idClient) => {
+  const dateByStudio = await DateTatoo.find({ id_studio: idStudio })
+    .populate("id_cliente", ["name", "lastName"])
+    .where("id_cliente")
+    .equals(idClient)
+    .exec();
+  return dateByStudio;
+};
+
+const getByIdStudioStaff = async (idStudio, idTatoo) => {
+  const dateByStudio = await DateTatoo.find({ id_studio: idStudio })
+    .populate("id_tatuador", ["name", "lastName"])
+    .where("id_tatuador")
+    .equals(idTatoo)
+    .exec();
+  return dateByStudio;
+};
+
 const deleteDate = (idDate) => {
   return DateTatoo.findByIdAndDelete(idDate).exec();
 };
@@ -70,4 +88,27 @@ const update = async (idDate, dateTatooData) => {
     { new: true }
   ).exec();
 };
-module.exports = { create, getByIdStudio, getById, deleteDate, update };
+const updatePayment = async (idDate) => {
+  // const { start, end, description, motivo } = dateTatooData;
+  return DateTatoo.findByIdAndUpdate(
+    idDate,
+    {
+      statusPago: true,
+      backgroundColor: "#519259",
+      textColor: "#FAEEE7",
+      borderColor: "#24A19C",
+    },
+    { new: true }
+  ).exec();
+};
+/*module.exports = { create, update, getById, get };*/
+module.exports = {
+  create,
+  getByIdStudio,
+  getById,
+  deleteDate,
+  update,
+  updatePayment,
+  getByIdStudioClient,
+  getByIdStudioStaff,
+};

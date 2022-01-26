@@ -35,10 +35,11 @@ const create = async (studioData, id_user) => {
   return savedStudio;
 };
 
-const get = async (idUser) => {
+const getAdmin = async (idUser) => {
   const studioByIdUser = await tatooStudio.findOne({ id_user: idUser }).exec();
   return studioByIdUser;
 };
+
 const getAll = async (idUser) => {
   const studioa = await tatooStudio.find({}).exec();
   return studioa;
@@ -88,4 +89,4 @@ const update = async (studioId, studioData) => {
     .exec();
 };
 
-module.exports = { create, update, getById, get, getAll };
+module.exports = { create, update, getById, getAdmin, getAll };

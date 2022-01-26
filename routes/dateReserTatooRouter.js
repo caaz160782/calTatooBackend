@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const dateReservation = require("../usecases/dateReservationTatoo");
-const { isAdmin } = require("../middlewares/authHandlers");
+const { isAdmin, isRegister } = require("../middlewares/authHandlers");
 const { subirArchivo } = require("../lib/subiendoArchivos");
 const config = require("../lib/config");
 const sgMail = require("@sendgrid/mail");
@@ -82,7 +82,7 @@ router.get("/:idDate", async (request, response, next) => {
   }
 });
 
-router.patch("/:idDate", isAdmin, async (req, res, next) => {
+router.patch("/:idDate", isRegister, async (req, res, next) => {
   try {
     const { idDate } = req.params;
     const dateTatooData = req.body;
@@ -110,7 +110,7 @@ router.patch("/:idDate", isAdmin, async (req, res, next) => {
   }
 });
 
-router.delete("/:idDate", isAdmin, (request, response, next) => {
+router.delete("/:idDate", isRegister, (request, response, next) => {
   try {
     const { idDate } = request.params;
     const resDelete = dateReservation.deleteDate(idDate);

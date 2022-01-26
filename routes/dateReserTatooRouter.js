@@ -6,7 +6,6 @@ const { subirArchivo } = require("../lib/subiendoArchivos");
 
 //router.post("/", subirArchivo, isAdmin, async (req, res, next) => {
 router.post("/", subirArchivo, async (req, res, next) => {
-  console.log("cita-------", req.body);
   try {
     let dateTatooData = req.body;
     if (req.body.picture !== "") {

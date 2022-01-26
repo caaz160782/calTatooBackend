@@ -128,7 +128,7 @@ router.delete("/:idClient", isAdmin, (request, response, next) => {
     const clientId = client.remove(idClient);
     response.status(202).json({
       ok: true,
-      message: `Deleted  successfully!!`,
+      message: `Dado de baja correctamente`,
     });
   } catch (error) {
     next(error);

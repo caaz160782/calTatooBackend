@@ -144,7 +144,7 @@ const correoExiste = async (req, res, next) => {
   if (emailExist) {
     res.status(404).json({
       code: "CORREO_EXIST",
-      message: "correo ya existe",
+      message: "el correo ingresado ya existe ",
       error: "correo ya existe",
     });
   } else {

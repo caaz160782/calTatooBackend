@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const mercadopago = require("mercadopago");
 require("dotenv").config();
+const config = require("../lib/config");
 
-// Agrega credenciales QUIEN ES EL VENDEDOR
 mercadopago.configure({
   access_token: process.env.ACCESS_TOKEN,
 });
@@ -11,9 +11,9 @@ mercadopago.configure({
 router.post("/", (req, res) => {
   let preference = {
     back_urls: {
-      success: "http://localhost:3000/agenda",
-      failure: "http://localhost:3000/failure",
-      pending: "http://localhost:3000/pending",
+      success: `${config.perfectTime}agenda`,
+      failure: `${config.perfectTime}agenda`,
+      pending: `${config.perfectTime}agenda`,
     },
     auto_return: "approved",
     external_reference: req.body.reference,
@@ -25,57 +25,23 @@ router.post("/", (req, res) => {
       },
     ],
     notification_url:
-      //"http://localhost:8000/feedback",
       "https://webhook.site/4d19eb23-ab51-463b-968a-074dd4fb565f",
-    // binary_mode: true,
+    binary_mode: true,
+    payment_methods: {
+      installments: 1,
+      excluded_payment_types: [{ id: "ticket" }, { id: "atm" }],
+      excluded_payment_methods: [{ id: "paypal" }],
+    },
   };
-  //se envian los parametros de la compra y mp devuelve la preferencia completada por ellos con datos adicionales
   mercadopago.preferences
     .create(preference)
     .then(function (response) {
       res.redirect(response.body.init_point);
-      //res.redirect(response.body.sandbox_init_point);
-      // res.json({
-      //   id: response.body.id,
-      // });
     })
     .catch(function (error) {
       console.log(error);
     });
 });
-
-// router.post("/", (req, res) => {
-
-//   mercadopago.configurations.setAccessToken(process.env.ACCESS_TOKEN);
-//   const payment_data = {
-//     transaction_amount: req.body.transaction_amount,
-//     token: req.body.token,
-//     description: req.body.description,
-//     installments: Number(req.body.installments),
-//     payment_method_id: req.body.paymentMethodId,
-//     issuer_id: req.body.issuer,
-//     payer: {
-//       email: req.body.payer.email,
-//       identification: {
-//         type: req.body.payer.docType,
-//         number: req.body.payer.docNumber,
-//       },
-//     },
-//   };
-
-//   mercadopago.payment
-//     .save(payment_data)
-//     .then((response) => {
-//       return res.status(response.status).json({
-//         status: response.body.status,
-//         status_detail: response.body.status_detail,
-//         id: response.body.id,
-//       });
-//     })
-//     .catch((err) => {
-//       return res.status(500).send(err);
-//     });
-// });
 
 module.exports = router;
 

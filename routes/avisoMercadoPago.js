@@ -6,7 +6,6 @@ require("dotenv").config();
 
 router.post("/", async (req, res) => {
   const payment = await mercadopago.payment.findById(req.body.paymentId);
-  console.log("acaaaa", payment.body.status, payment.body.external_reference);
   const status = payment.body.status;
   if (status === "approved") {
     try {
@@ -85,6 +84,3 @@ router.post("/", async (req, res) => {
 // });
 
 module.exports = router;
-
-//4075 5957 1648 3764
-//11/25

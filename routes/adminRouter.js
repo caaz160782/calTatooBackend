@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const user = require("../usecases/admin");
 const rol = require("../usecases/rols");
-const { validarCampos } = require("../middlewares/authHandlers");
+const { validarCampos, correoExiste } = require("../middlewares/authHandlers");
 const { check } = require("express-validator");
 const { existEmail } = require("../usecases/verifica.js");
 const {
@@ -19,7 +19,8 @@ router.post(
   lastNameNull,
   pswDefinition,
   emailVerifiqued,
-  [check("email").custom(existEmail), validarCampos],
+  correoExiste,
+  // [check("email").custom(existEmail), validarCampos],
   async (req, res, next) => {
     let userData = req.body;
     try {

@@ -116,7 +116,7 @@ router.patch(
   async (request, response, next) => {
     const { idClient } = request.params;
     const { picture } = request.body;
-    const clientId = clientData._id;
+    // const clientId = clientData._id;
     try {
       if (picture !== "") {
         if (request.file.filename) {

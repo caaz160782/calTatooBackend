@@ -49,7 +49,7 @@ const pswDefinition = async (req, res, next) => {
       code: "WRONG_PASSWORD",
       error: "password no valido",
       message:
-        "password must be a minimum of 8 characters including a number, Upper, Lower And one special character",
+        "el password debe tener un mínimo de 8 caracteres, incluidos un número, mayúscula, minúscula y un carácter especial",
     });
   } else {
     next();

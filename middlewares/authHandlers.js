@@ -94,6 +94,50 @@ const isMember = (req, res, next) => {
   }
 };
 
+const isRegister = (req, res, next) => {
+  const { apitoken } = req.headers;
+
+  if (apitoken !== undefined) {
+    try {
+      const verify = jwt.verify(apitoken); //valida que el token se valido
+      const { rol, sub } = verify;
+
+      if (rol === "Administrador" || rol === "tatuador" || rol === "Cliente") {
+        req.id = sub;
+        next();
+      } else {
+        res.status(403).json({
+          code: "Unauthorized",
+          message: "Unauthorized",
+          error: "no esta autorizado",
+        });
+      }
+    } catch (error) {
+      let { name } = error;
+      if (name === "TokenExpiredError") {
+        res.status(401).json({
+          code: "TokenExpiredError",
+          message: "timeExpired",
+          error: "no esta autorizado",
+        });
+        S;
+      } else if (name === "JsonWebTokenError") {
+        res.status(403).json({
+          ok: false,
+          message: "Unauthorized",
+          error: "no esta autorizado",
+        });
+      }
+    }
+  } else {
+    res.status(403).json({
+      code: "TokenNotExist",
+      message: "Unauthorized",
+      error: "no esta autorizado",
+    });
+  }
+};
+
 const correoExiste = async (req, res, next) => {
   const { email } = req.body;
   const emailExist = await User.findOne({ email });
@@ -123,4 +167,11 @@ const isClient = (req, res, next) => {
   }
 };
 
-module.exports = { isAdmin, validarCampos, isClient, isMember, correoExiste };
+module.exports = {
+  isAdmin,
+  validarCampos,
+  isClient,
+  isMember,
+  correoExiste,
+  isRegister,
+};

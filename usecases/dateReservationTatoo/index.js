@@ -51,6 +51,24 @@ const getByIdStudio = async (idStudio) => {
   return dateByStudio;
 };
 
+const getByIdStudioClient = async (idStudio, idClient) => {
+  const dateByStudio = await DateTatoo.find({ id_studio: idStudio })
+    .populate("id_cliente", ["name", "lastName"])
+    .where("id_cliente")
+    .equals(idClient)
+    .exec();
+  return dateByStudio;
+};
+
+const getByIdStudioStaff = async (idStudio, idTatoo) => {
+  const dateByStudio = await DateTatoo.find({ id_studio: idStudio })
+    .populate("id_tatuador", ["name", "lastName"])
+    .where("id_tatuador")
+    .equals(idTatoo)
+    .exec();
+  return dateByStudio;
+};
+
 const deleteDate = (idDate) => {
   return DateTatoo.findByIdAndDelete(idDate).exec();
 };
@@ -91,4 +109,6 @@ module.exports = {
   deleteDate,
   update,
   updatePayment,
+  getByIdStudioClient,
+  getByIdStudioStaff,
 };

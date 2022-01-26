@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const dateReservation = require("../usecases/dateReservationTatoo");
-const { isAdmin } = require("../middlewares/authHandlers");
+const { isRegister } = require("../middlewares/authHandlers");
 
-router.get("/:idStudio", isAdmin, async (request, response, next) => {
+router.post("/:idStudio", isRegister, async (request, response, next) => {
   const { idStudio } = request.params;
+  const { idStaff } = request.body;
+
   try {
-    const dates = await dateReservation.getByIdStudio(idStudio);
+    const dates = await dateReservation.getByIdStudioStaff(idStudio, idStaff);
     response.status(201).json({
       code: true,
       message: "Encontrada citas",
@@ -16,7 +18,7 @@ router.get("/:idStudio", isAdmin, async (request, response, next) => {
     //next(error)
     response.status(404).json({
       code: false,
-      message: "Ninguna Cita Encontrada",
+      message: "Ninguna Cita Encontrada staff",
       error: error,
     });
   }

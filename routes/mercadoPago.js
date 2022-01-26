@@ -11,9 +11,9 @@ mercadopago.configure({
 router.post("/", (req, res) => {
   let preference = {
     back_urls: {
-      success: `${config.perfectTime}agenda`,
-      failure: `${config.perfectTime}agenda`,
-      pending: `${config.perfectTime}agenda`,
+      success: `${config.server.serverH}agenda`,
+      failure: `${config.server.serverH}agenda`,
+      pending: `${config.server.serverH}.agenda`,
     },
     auto_return: "approved",
     external_reference: req.body.reference,

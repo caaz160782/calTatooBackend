@@ -36,7 +36,7 @@ const getById = async (userId) => {
 
 const update = async (userId, userData) => {
   const { password, ...rest } = userData;
-  console.log("en el manejador", userData);
+  //console.log("en el manejador", userData);
   if (password) {
     const passwordHash = await hash.hashPassword(password);
     return User.findByIdAndUpdate(userId, {

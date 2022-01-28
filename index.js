@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 apiRouter(app);
 //levantar el servidor
 app.listen(port, () => {
-  console.log(`listening on port: htpp://localhost: ${port}`);
+  //console.log(`listening on port: htpp://localhost: ${port}`);
   db.connect()
     .then(() => {
       console.log("DB conected");

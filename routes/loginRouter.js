@@ -4,10 +4,7 @@ const login = require("../usecases/login");
 const studioTat = require("../usecases/Studio");
 const { emailVerifiqued } = require("../middlewares/typesVerified");
 
-//router.post("/", emailVerifiqued, async (req, res, next) => {
 router.post("/", async (req, res, next) => {
-  //console.log("login");
-  //console.log(req.body);
   try {
     const userAccess = req.body;
     const resFind = await login.find(userAccess);
@@ -19,7 +16,6 @@ router.post("/", async (req, res, next) => {
       }
       if (infoUser.rol === "Cliente" || infoUser.rol === "tatuador") {
         foundStudio = await studioTat.getById(infoUser.idStudio);
-        console.log();
       }
       let infoStudio = {};
       if (foundStudio !== null) {

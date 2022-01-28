@@ -6,7 +6,6 @@ const find = async (userAccess) => {
   const { email, password } = userAccess;
   const passwordF = password;
   const found = await User.findOne({ email }).populate("idRole", ["rol"]);
-  //console.log(1, found);
   if (found !== null) {
     const {
       _id,

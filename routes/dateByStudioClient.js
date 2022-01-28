@@ -6,7 +6,7 @@ const { isRegister } = require("../middlewares/authHandlers");
 router.post("/:idStudio", isRegister, async (request, response, next) => {
   const { idStudio } = request.params;
   const { idClient } = request.body;
-  console.log(idClient);
+  //console.log(idClient);
   try {
     const dates = await dateReservation.getByIdStudioClient(idStudio, idClient);
     response.status(201).json({

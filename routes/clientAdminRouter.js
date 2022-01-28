@@ -15,6 +15,7 @@ const {
 } = require("../middlewares/typesVerified");
 const rol = require("../usecases/rols");
 const { subirArchivo } = require("../lib/subiendoArchivos");
+
 const config = require("../lib/config");
 const sgMail = require("@sendgrid/mail");
 const keyGrid = config.sendgrid.api_key;

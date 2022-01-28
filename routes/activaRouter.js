@@ -3,6 +3,7 @@ const router = express.Router();
 const activa = require("../usecases/activacion");
 const upPsw = require("../usecases/client");
 const { differenceInMilliseconds, parseISO } = require("date-fns");
+const { pswDefinition } = require("../middlewares/typesVerified");
 
 router.post("/:id", async (req, res, next) => {
   try {
@@ -37,7 +38,7 @@ router.post("/:id", async (req, res, next) => {
   }
 });
 
-router.patch("/:idUser", async (request, response, next) => {
+router.patch("/:idUser", pswDefinition, async (request, response, next) => {
   const { idUser } = request.params;
   const infoData = request.body;
   try {

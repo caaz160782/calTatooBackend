@@ -5,11 +5,13 @@ const {
   isAdmin,
   isMember,
   validarCampos,
+  correoExiste,
 } = require("../middlewares/authHandlers");
 const {
   verifiedAge,
   pswDefinition,
   defphonePersonal,
+  emailVerifiqued,
 } = require("../middlewares/typesVerified");
 const rol = require("../usecases/rols");
 const { subirArchivo } = require("../lib/subiendoArchivos");
@@ -77,6 +79,7 @@ router.post(
   verifiedAge,
   isMember,
   defphonePersonal,
+  correoExiste,
   async (request, response, next) => {
     try {
       let clientData = request.body;
@@ -104,7 +107,12 @@ router.post(
         });
       }
     } catch (error) {
-      next(error);
+      //next(error);
+      response.status(404).json({
+        status: "wrong",
+        message: "Client not created",
+        error: "Cliente no creado",
+      });
     }
   }
 );

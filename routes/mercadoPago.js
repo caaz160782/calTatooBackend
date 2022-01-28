@@ -11,9 +11,6 @@ mercadopago.configure({
 router.post("/", (req, res) => {
   let preference = {
     back_urls: {
-      // success: "http://localhost:3000/agenda",
-      // failure: "http://localhost:3000/failure",
-      // pending: "http://localhost:3000/pending",
       success: `${config.server.serverH}/agenda`,
       failure: `${config.server.serverH}/agenda`,
       pending: `${config.server.serverH}/agenda`,
